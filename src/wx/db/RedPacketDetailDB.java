@@ -27,14 +27,29 @@ public class RedPacketDetailDB {
 	}
 	
 	/**
-	 * 根据口令查询红包
+	 * 根据口令查询可抢红包 返回红包id
 	 */
-	public RedPacketDetail getRedPacketByNo(int no) throws Exception{
-		RedPacketDetail redPacketDetail=null;
-		String sq="SELECT * FROM packet_detail WHERE no=?";
+	public int getCanTakeId(int no) throws Exception{
+		int canTakeId=0;
+		String sq="SELECT id FROM packet_detail WHERE no=? AND takeuser IS NULL LIMIT 1";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
 		pst.setInt(1, no);
+		ResultSet rs=pst.executeQuery();
+		if(rs.next()) canTakeId=rs.getInt("id");
+		DBUtil.close(rs, pst, conn);
+		return canTakeId;
+	}
+	
+	/**
+	 * 根据id查询红包
+	 */
+	public RedPacketDetail getById(int id) throws Exception{
+		RedPacketDetail redPacketDetail=null;
+		String sq="SELECT * FROM packet_detail WHERE id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setInt(1, id);
 		ResultSet rs=pst.executeQuery();
 		if (rs.next()) {
 			redPacketDetail=new RedPacketDetail();
@@ -46,6 +61,21 @@ public class RedPacketDetailDB {
 		}
 		DBUtil.close(rs, pst, conn);
 		return redPacketDetail;
+	}
+	
+	/**
+	 * 加入用户信息
+	 * 修改二维码为被扫码过的状态
+	 */
+	public boolean updateTakeUser(int id,int takeuser) throws Exception{
+		String sq = "UPDATE packet_detail SET takeuser=?,taketime=now() WHERE id=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst = conn.prepareStatement(sq);
+		pst.setInt(1,takeuser);
+		pst.setInt(2,id);
+		int count=pst.executeUpdate();
+		DBUtil.close(null, pst, conn);
+		return count>0;
 	}
 	
 }

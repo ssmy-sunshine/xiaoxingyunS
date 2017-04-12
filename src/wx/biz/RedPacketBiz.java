@@ -17,18 +17,13 @@ public class RedPacketBiz {
 	private static final double MIN_MONEY=0.1d;
 	/*分配的最小金额*/
 	private static final double MIN_PACKET=0.01d;
-	/*当前红包的总金额*/
-	private double totalMoney;
-	/*当前红包的分配个数*/
-	private int count;
 	
-	public RedPacketBiz(double totalMoney,int count){
-		this.totalMoney=totalMoney;
-		this.count=count;
-	}
-	
-	/**创建红包*/
-	public void create() throws Exception{
+	/**
+	 * 创建红包
+	 * @param totalMoney 红包总金额
+	 * @param count 红包分配个数
+	 */
+	public void create(double totalMoney,int count) throws Exception{
 		//验证金额是否有效
 		checkMoney(totalMoney, count);
 		//随机分配红包金额
@@ -50,6 +45,22 @@ public class RedPacketBiz {
 			redPacketDetail.setMoney(packetMoney);
 			mRedPacketDetailDB.insert(redPacketDetail);
 		}
+	}
+	
+	/**
+	 * 根据口令抢红包
+	 * @param no 口令
+	 * @param takeuser 用户id
+	 * @return 成功true; 失败false;
+	 */
+	public void takeByNo(int no,int takeuser) throws Exception{
+		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
+		//根据口令查询可抢的红包
+		int canTakeId=mRedPacketDetailDB.getCanTakeId(no);
+		if(canTakeId==0) throw new BizException("红包已抢完");
+		//给红包设置用户信息(抢红包)
+		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeId, takeuser);
+		if(!success) throw new BizException("手慢了,红包已抢光");
 	}
 	
 	/**生成红包口令,6位随机数 */
@@ -99,4 +110,5 @@ public class RedPacketBiz {
 		Collections.shuffle(list);
 		return list;
 	}
+	
 }

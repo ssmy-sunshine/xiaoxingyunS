@@ -16,16 +16,24 @@ public class RedPacketSL {
 	public void todo(HttpServletRequest request,String SLM) throws Exception{
 		if("create".equals(SLM)){
 			//发红包
-			createRedPacket(request);
+			create(request);
+		}else if("takebyno".equals(SLM)){
+			takeByNo(request);
 		}
 	}
 	
-	/**
-	 * 发红包
-	 */
-	private void createRedPacket(HttpServletRequest request) throws Exception{
+	/**发红包*/
+	private void create(HttpServletRequest request) throws Exception{
 		double totalMoney=ParamUtil.getDouble(request, "totalMoney");
 		int count=ParamUtil.getInt(request, "count");
-		new RedPacketBiz(totalMoney, count).create();
+		new RedPacketBiz().create(totalMoney, count);
 	}
+	
+	/**抢红包*/
+	private void takeByNo(HttpServletRequest request) throws Exception{
+		int no=ParamUtil.getInt(request, "no");
+		int takeuser=ParamUtil.getInt(request, "takeuser");
+		new RedPacketBiz().takeByNo(no, takeuser);
+	}
+	
 }
