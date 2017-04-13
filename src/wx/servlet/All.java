@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import wx.entity.Result;
-import wx.exception.BizException;
-import wx.exception.ParamException;
+import wx.exception.AllException;
 import wx.util.ParamUtil;
 
 /**
@@ -51,19 +50,13 @@ public class All extends HttpServlet {
 				new RedPacketSL().todo(request, SLM);
 			}
 			
-			res.Code=200;
-			res.Msg="Success";
-		}catch (ParamException e) {
-			res.Code=5001;
-			res.Msg=e.getMessage();
-			e.printStackTrace();
-		}catch (BizException e) {
-			res.Code=5002;
-			res.Msg=e.getMessage();
+		}catch (AllException e) {
+			res.setCode(e.getCode());
+			res.setMsg(e.getMessage());
 			e.printStackTrace();
 		}catch (Exception e) {
-			res.Code=500;
-			res.Msg=e.getMessage();
+			res.setCode(Result.CODE_ERR);
+			res.setMsg(e.getMessage());
 			e.printStackTrace();
 		}
 		
