@@ -1,5 +1,9 @@
 package wx.entity;
 
+import java.util.Date;
+
+import wx.util.InfoUtil;
+
 public class RedPacket {
 	/**自增长id*/
 	private int id;
@@ -10,11 +14,15 @@ public class RedPacket {
 	/**红包个数*/
 	private int count;
 	/**红包提示语*/
-	private String tip;
+	private String remark;
 	/**积分*/
 	private int score;
 	/**券id*/
 	private int ticketId;
+	/**0拼手气;1平均分*/
+	private int taketype;
+	/**创建时间*/
+	private Date createtime;
 	
 	public int getId() {
 		return id;
@@ -40,11 +48,11 @@ public class RedPacket {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public String getTip() {
-		return tip!=null ? tip : "欢迎您的下次光临~";
+	public String getRemark() {
+		return InfoUtil.isTextEmpty(remark) ? "欢迎您的下次光临~" : remark;
 	}
-	public void setTip(String tip) {
-		this.tip = tip;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	public int getScore() {
 		return score;
@@ -57,6 +65,18 @@ public class RedPacket {
 	}
 	public void setTicketId(int ticketId) {
 		this.ticketId = ticketId;
+	}
+	public int getTaketype() {
+		return taketype;
+	}
+	public void setTaketype(int taketype) {
+		this.taketype = taketype;
+	}
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
 	}
 	
 }

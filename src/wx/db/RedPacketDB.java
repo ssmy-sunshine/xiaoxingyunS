@@ -9,7 +9,7 @@ import wx.util.DBUtil;
 
 /**
  * 表 packets
- * id no money count tip score ticketid
+ * id no money count remark score ticketid taketype createtime
  */
 public class RedPacketDB {
 	
@@ -17,15 +17,16 @@ public class RedPacketDB {
 	 * 添加新的红包
 	 */
 	public void insert(RedPacket redPacket) throws Exception{
-		String sq="INSERT INTO packets (no,money,count,tip,score,ticketid) VALUES (?,?,?,?,?,?)";
+		String sq="INSERT INTO packets (no,money,count,remark,score,ticketid,taketype) VALUES (?,?,?,?,?,?,?)";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
 		pst.setInt(1,redPacket.getNo());
 		pst.setDouble(2,redPacket.getMoney());
 		pst.setInt(3,redPacket.getCount());
-		pst.setString(4,redPacket.getTip());
+		pst.setString(4,redPacket.getRemark());
 		pst.setInt(5,redPacket.getScore());
 		pst.setInt(6,redPacket.getTicketId());
+		pst.setInt(7,redPacket.getTaketype());
 		pst.executeUpdate();
 		DBUtil.close(null, pst, conn);
 	}
@@ -60,9 +61,11 @@ public class RedPacketDB {
 			redPacket.setNo(rs.getInt("no"));
 			redPacket.setMoney(rs.getInt("money"));
 			redPacket.setCount(rs.getInt("count"));
-			redPacket.setTip(rs.getString("tip"));
+			redPacket.setRemark(rs.getString("remark"));
 			redPacket.setScore(rs.getInt("score"));
 			redPacket.setTicketId(rs.getInt("ticketid"));
+			redPacket.setTaketype(rs.getInt("taketype"));
+			redPacket.setCreatetime(rs.getDate("createtime"));
 		}
 		DBUtil.close(rs, pst, conn);
 		return redPacket;

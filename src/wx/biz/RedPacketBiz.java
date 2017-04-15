@@ -1,6 +1,5 @@
 package wx.biz;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,6 +8,7 @@ import wx.db.RedPacketDetailDB;
 import wx.entity.RedPacket;
 import wx.entity.RedPacketDetail;
 import wx.exception.BizException;
+import wx.util.InfoUtil;
 
 public class RedPacketBiz {
 	/*一个红包的最大金额*/
@@ -23,18 +23,17 @@ public class RedPacketBiz {
 	 * @param totalMoney 红包总金额
 	 * @param count 红包分配个数
 	 */
-	public void create(double totalMoney,int count) throws Exception{
+	public int create(RedPacket redPacket) throws Exception{
 		//验证金额是否有效
+		double totalMoney=redPacket.getMoney();
+		int count=redPacket.getCount();
 		checkMoney(totalMoney, count);
 		//随机分配红包金额
-		ArrayList<Double> list=carveMoney(totalMoney, count);
+		ArrayList<Double> list=carveMoney(totalMoney, count, redPacket.getTaketype());
 		//红包口令
 		int packetNo=getPacketNo();
 		//实例化红包对象
-		RedPacket redPacket=new RedPacket();
 		redPacket.setNo(packetNo);
-		redPacket.setCount(count);
-		redPacket.setMoney(totalMoney);
 		//入库红包
 		new RedPacketDB().insert(redPacket);
 		//入库每个分配好的红包
@@ -45,6 +44,7 @@ public class RedPacketBiz {
 			redPacketDetail.setMoney(packetMoney);
 			mRedPacketDetailDB.insert(redPacketDetail);
 		}
+		return packetNo;
 	}
 	
 	/**
@@ -88,27 +88,37 @@ public class RedPacketBiz {
 	 * 随机分配红包
 	 * @return 每个红包的金额列表
 	 */
-	private ArrayList<Double> carveMoney(double totalMoney,int count){
-		double minPacket=totalMoney/(count*2);//红包最小值为平均值的一半
+	private ArrayList<Double> carveMoney(double totalMoney,int count,int taketype){
 		ArrayList<Double> list=new ArrayList<Double>();
-		for(int i=1;i<count;i++){
-			double safeMoney=(totalMoney-(count-i)*minPacket)/(count-i);
-			//随机生成一个红包金额
-			double onePacket=Math.random()*(safeMoney-minPacket)+minPacket;
-			//保留2位小数
-			onePacket=new BigDecimal(onePacket).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-			//剩余金额
-			totalMoney -= onePacket;
-			//保留2位小数
-			totalMoney=new BigDecimal(totalMoney).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-			//加入集合
-			list.add(onePacket);
+		if(taketype==1){
+			//1平均分
+			double ave=InfoUtil.get2Double(totalMoney/count);//每个红包平均值
+			for(int i=0;i<count;i++){
+				list.add(ave);
+			}
+			return list;
+		}else{
+			//0拼手气
+			double minPacket=totalMoney/(count*2);//红包最小值为平均值的一半
+			for(int i=1;i<count;i++){
+				double safeMoney=(totalMoney-(count-i)*minPacket)/(count-i);
+				//随机生成一个红包金额
+				double onePacket=Math.random()*(safeMoney-minPacket)+minPacket;
+				//保留2位小数
+				onePacket=InfoUtil.get2Double(onePacket);
+				//剩余金额
+				totalMoney -= onePacket;
+				//保留2位小数
+				totalMoney=InfoUtil.get2Double(totalMoney);
+				//加入集合
+				list.add(onePacket);
+			}
+			//加入最后一个红包
+			list.add(totalMoney);
+			//随机打乱list
+			Collections.shuffle(list);
+			return list;
 		}
-		//加入最后一个红包
-		list.add(totalMoney);
-		//随机打乱list
-		Collections.shuffle(list);
-		return list;
 	}
 	
 }

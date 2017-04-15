@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import wx.entity.Result;
 import wx.exception.AllException;
 import wx.util.ParamUtil;
@@ -44,12 +47,15 @@ public class All extends HttpServlet {
 		try {
 			SL=ParamUtil.getString(request, "SL");
 			SLM=ParamUtil.getString(request, "SLM");
+			JsonObject obj=null;
 			
 			if("RedPacket".equals(SL)){
 				//红包业务
-				new RedPacketSL().todo(request, SLM);
+				obj=new RedPacketSL().todo(request, SLM);
 			}
 			
+			res.setCode(Result.CODE_SUCCESS);
+			res.setMsg(obj);
 		}catch (AllException e) {
 			res.setCode(e.getCode());
 			res.setMsg(e.getMessage());
@@ -61,7 +67,8 @@ public class All extends HttpServlet {
 		}
 		
 		//返回客户端的 默认是"1" 服务器响应异常
-		String resString=res.toString();
+		res.setSysTime(System.currentTimeMillis());
+		String resString=new Gson().toJson(res);
 		PrintWriter out = response.getWriter();
 		out.print(resString);
 		out.flush();

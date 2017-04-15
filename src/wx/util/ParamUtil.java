@@ -26,4 +26,13 @@ public class ParamUtil {
 		if(value==null) throw new ParamException(paramKey);
 		return Integer.parseInt(value);
 	}
+	
+	public static int getInt0(HttpServletRequest request,String paramKey){
+		String value=request.getParameter(paramKey);
+		if(InfoUtil.isTextEmpty(value)){
+			return 0;
+		}else{
+			return Integer.parseInt(value);
+		}
+	}
 }

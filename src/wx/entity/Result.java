@@ -1,6 +1,5 @@
 package wx.entity;
 
-import com.google.gson.Gson;
 
 /**
  *请求返回的结果
@@ -21,40 +20,31 @@ public class Result {
 	/**
 	 * 状态码
 	 */
-	private int Code=CODE_SUCCESS;
+	private int Code;
 	
 	/**
 	 * 内容
 	 */
-	private String Msg="Success";
+	private Object Msg;
 	
 	/**
 	 * 系统时间
 	 */
 	private long SysTime;
-	
-	
-	public String toString() {
-		setSysTime(System.currentTimeMillis());
-		return new Gson().toJson(this);
-	}
-	
+
 	public int getCode() {
 		return Code;
 	}
-
 
 	public void setCode(int code) {
 		Code = code;
 	}
 
-
-	public String getMsg() {
+	public Object getMsg() {
 		return Msg;
 	}
 
-
-	public void setMsg(String msg) {
+	public void setMsg(Object msg) {
 		Msg = msg;
 	}
 
@@ -65,5 +55,4 @@ public class Result {
 	public void setSysTime(long sysTime) {
 		SysTime = sysTime;
 	}
-	
 }
