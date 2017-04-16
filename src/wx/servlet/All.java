@@ -2,19 +2,18 @@ package wx.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 import wx.entity.Result;
 import wx.exception.AllException;
+import wx.util.InfoUtil;
 import wx.util.ParamUtil;
+
+import com.google.gson.Gson;
 
 /**
  * 红包业务
@@ -47,7 +46,7 @@ public class All extends HttpServlet {
 		try {
 			SL=ParamUtil.getString(request, "SL");
 			SLM=ParamUtil.getString(request, "SLM");
-			JsonObject obj=null;
+			Object obj=null;
 			
 			if("RedPacket".equals(SL)){
 				//红包业务
@@ -75,7 +74,7 @@ public class All extends HttpServlet {
 		out.close();
 		
 		//输入日志
-		System.out.println(SL+"/"+SLM+ "--> 返回reback=" + resString+"; 时间="+new Date()+ "; 响应=" + (System.currentTimeMillis()-doStartTime));
+		System.out.println(SL+"/"+SLM+ "--> 返回reback=" + resString+"; 时间="+InfoUtil.dateFormat(null)+ "; 响应=" + (System.currentTimeMillis()-doStartTime));
 	}
 	
 }

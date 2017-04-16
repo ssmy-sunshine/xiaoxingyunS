@@ -1,6 +1,7 @@
 package wx.entity;
 
-import java.util.Date;
+
+import java.sql.Timestamp;
 
 import wx.util.InfoUtil;
 
@@ -8,11 +9,13 @@ public class RedPacket {
 	/**自增长id*/
 	private int id;
 	/**红包口令*/
-	private int no;
+	private int pass;
 	/**红包总金额*/
 	private double money;
 	/**红包个数*/
 	private int count;
+	/**商家id*/
+	private int busid;
 	/**红包提示语*/
 	private String remark;
 	/**积分*/
@@ -21,8 +24,10 @@ public class RedPacket {
 	private int ticketId;
 	/**0拼手气;1平均分*/
 	private int taketype;
+	/**0拼手气;1平均分*/
+	private String taketypetip;
 	/**创建时间*/
-	private Date createtime;
+	private String createtime;
 	
 	public int getId() {
 		return id;
@@ -30,11 +35,11 @@ public class RedPacket {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getNo() {
-		return no;
+	public int getPass() {
+		return pass;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setPass(int pass) {
+		this.pass = pass;
 	}
 	public double getMoney() {
 		return money;
@@ -47,6 +52,12 @@ public class RedPacket {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public int getBusid() {
+		return busid;
+	}
+	public void setBusid(int busid) {
+		this.busid = busid;
 	}
 	public String getRemark() {
 		return InfoUtil.isTextEmpty(remark) ? "欢迎您的下次光临~" : remark;
@@ -71,12 +82,23 @@ public class RedPacket {
 	}
 	public void setTaketype(int taketype) {
 		this.taketype = taketype;
+		if(taketype==1){
+			setTaketypetip("平均分");
+		}else{
+			setTaketypetip("拼手气");
+		}
 	}
-	public Date getCreatetime() {
+	public String getTaketypetip() {
+		return taketypetip;
+	}
+	public void setTaketypetip(String taketypetip) {
+		this.taketypetip = taketypetip;
+	}
+	public String getCreatetime() {
 		return createtime;
 	}
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setCreatetime(Timestamp createtime) {
+		this.createtime = InfoUtil.dateFormat(createtime);
 	}
 	
 }

@@ -16,6 +16,8 @@ public class Result {
 	public static final int CODE_ERR_BIZ=5002;
 	/**token过期*/
 	public static final int CODE_ERR_TK=5003;
+	/**Msg默认值*/
+	public static final String MSG_DEFAULT="SUCCESS";
 	
 	/**
 	 * 状态码

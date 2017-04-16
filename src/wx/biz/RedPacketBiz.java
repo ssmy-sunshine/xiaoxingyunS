@@ -31,32 +31,32 @@ public class RedPacketBiz {
 		//随机分配红包金额
 		ArrayList<Double> list=carveMoney(totalMoney, count, redPacket.getTaketype());
 		//红包口令
-		int packetNo=getPacketNo();
+		int pass=getPacketPass();
 		//实例化红包对象
-		redPacket.setNo(packetNo);
+		redPacket.setPass(pass);
 		//入库红包
 		new RedPacketDB().insert(redPacket);
 		//入库每个分配好的红包
 		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
 		for (Double packetMoney : list) {
 			RedPacketDetail redPacketDetail=new RedPacketDetail();
-			redPacketDetail.setNo(packetNo);
+			redPacketDetail.setPass(pass);
 			redPacketDetail.setMoney(packetMoney);
 			mRedPacketDetailDB.insert(redPacketDetail);
 		}
-		return packetNo;
+		return pass;
 	}
 	
 	/**
 	 * 根据口令抢红包
-	 * @param no 口令
+	 * @param pass 口令
 	 * @param takeuser 用户id
 	 * @return 成功true; 失败false;
 	 */
-	public void takeByNo(int no,int takeuser) throws Exception{
+	public void takeByPass(int pass,int takeuser) throws Exception{
 		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
 		//根据口令查询可抢的红包
-		int canTakeId=mRedPacketDetailDB.getCanTakeId(no);
+		int canTakeId=mRedPacketDetailDB.getCanTakeId(pass);
 		if(canTakeId==0) throw new BizException("红包已抢完");
 		//给红包设置用户信息(抢红包)
 		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeId, takeuser);
@@ -64,16 +64,16 @@ public class RedPacketBiz {
 	}
 	
 	/**生成红包口令,6位随机数 */
-	private int getPacketNo() throws Exception{
+	private int getPacketPass() throws Exception{
 		//6位随机数
-		int no=(int)((Math.random()*9+1)*100000);
+		int pass=(int)((Math.random()*9+1)*100000);
 		//查询是否已存在
-		boolean isExist=new RedPacketDB().isNoExist(no);
+		boolean isExist=new RedPacketDB().isPassExist(pass);
 		if(isExist){
 			//如果已存在,则递归
-			no=getPacketNo();
+			pass=getPacketPass();
 		}
-		return no;
+		return pass;
 	}
 	
 	/**验证金额是否有效 */

@@ -3,13 +3,15 @@ package wx.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import wx.entity.RedPacketDetail;
+import wx.entity.TakeDetail;
 import wx.util.DBUtil;
 
 /**
  * 表 packet_detail
- * id no money takeuser taketime
+ * id pass money takeuser taketime
  */
 public class RedPacketDetailDB {
 	
@@ -17,10 +19,10 @@ public class RedPacketDetailDB {
 	 * 添加新的红包
 	 */
 	public void insert(RedPacketDetail redPacketDetail) throws Exception{
-		String sq="INSERT INTO packet_detail (no,money) VALUES (?,?)";
+		String sq="INSERT INTO packet_detail (pass,money) VALUES (?,?)";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
-		pst.setInt(1,redPacketDetail.getNo());
+		pst.setInt(1,redPacketDetail.getPass());
 		pst.setDouble(2,redPacketDetail.getMoney());
 		pst.executeUpdate();
 		DBUtil.close(null, pst, conn);
@@ -29,12 +31,12 @@ public class RedPacketDetailDB {
 	/**
 	 * 根据口令查询可抢红包 返回红包id
 	 */
-	public int getCanTakeId(int no) throws Exception{
+	public int getCanTakeId(int pass) throws Exception{
 		int canTakeId=0;
-		String sq="SELECT id FROM packet_detail WHERE no=? AND takeuser IS NULL LIMIT 1";
+		String sq="SELECT id FROM packet_detail WHERE pass=? AND takeuser IS NULL LIMIT 1";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
-		pst.setInt(1, no);
+		pst.setInt(1, pass);
 		ResultSet rs=pst.executeQuery();
 		if(rs.next()) canTakeId=rs.getInt("id");
 		DBUtil.close(rs, pst, conn);
@@ -54,10 +56,10 @@ public class RedPacketDetailDB {
 		if (rs.next()) {
 			redPacketDetail=new RedPacketDetail();
 			redPacketDetail.setId(rs.getInt("id"));
-			redPacketDetail.setNo(rs.getInt("no"));
+			redPacketDetail.setPass(rs.getInt("pass"));
 			redPacketDetail.setMoney(rs.getInt("money"));
 			redPacketDetail.setTakeuser(rs.getInt("takeuser"));
-			redPacketDetail.setTaketime(rs.getDate("taketime"));
+			redPacketDetail.setTaketime(rs.getTimestamp("taketime"));
 		}
 		DBUtil.close(rs, pst, conn);
 		return redPacketDetail;
@@ -76,6 +78,30 @@ public class RedPacketDetailDB {
 		int count=pst.executeUpdate();
 		DBUtil.close(null, pst, conn);
 		return count>0;
+	}
+
+	/**
+	 * 查询抢红包明细
+	 */
+	public ArrayList<TakeDetail> getTakeList(int pass) throws Exception {
+		ArrayList<TakeDetail> list=new ArrayList<TakeDetail>();
+		String sq="SELECT * FROM packet_detail WHERE pass=? AND takeuser IS NOT NULL";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setInt(1, pass);
+		ResultSet rs=pst.executeQuery();
+		while (rs.next()) {
+			TakeDetail mTakeDetail=new TakeDetail();
+			mTakeDetail.setPass(rs.getInt("pass"));
+			mTakeDetail.setMoney(rs.getInt("money"));
+			mTakeDetail.setTakeuser(rs.getInt("takeuser"));
+			mTakeDetail.setTaketime(rs.getTimestamp("taketime"));
+			mTakeDetail.setNickname(rs.getString("nickname"));
+			mTakeDetail.setUsericon(rs.getString("usericon"));
+			list.add(mTakeDetail);
+		}
+		DBUtil.close(rs, pst, conn);
+		return list;
 	}
 	
 }

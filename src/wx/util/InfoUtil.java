@@ -3,6 +3,7 @@ package wx.util;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class InfoUtil {
@@ -24,14 +25,19 @@ public class InfoUtil {
 		return new BigDecimal(d).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
 	
-	private static SimpleDateFormat sdf1= new SimpleDateFormat("yyyyMMdd");
-	private static SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMddHHmmss");
-	private static SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	/**
+	 * 转化时间为 yyyy-MM-dd HH:mm:ss
+	 */
+	public static String dateFormat(Date date){
+		if(date==null) date=new Date();
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+	}
 	 
 	 /**
 	  * 检查2个毫秒是否为同一天
 	  */
 	public static boolean isSameDay(long t1,long t2) {
+	SimpleDateFormat sdf1= new SimpleDateFormat("yyyyMMdd");
 	  String d1 =sdf1.format(t1);
 	  String d2 =sdf1.format(t2);
 	  return d1.equals(d2);
@@ -41,6 +47,8 @@ public class InfoUtil {
 	 * 获取今天0点的毫秒数
 	 */
 	public static long getTodayMillis() throws ParseException{
+		SimpleDateFormat sdf1= new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf2= new SimpleDateFormat("yyyyMMddHHmmss");
 		String today=sdf1.format(System.currentTimeMillis())+"000000";
         return sdf2.parse(today).getTime();
 	}
@@ -50,6 +58,7 @@ public class InfoUtil {
 	 * yyyy-MM-dd HH:mm
 	 */
 	public static String getTime(long time){
+		SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		return sdf3.format(time);
 	}
 	
