@@ -58,7 +58,7 @@ public class RedPacketDetailDB {
 			redPacketDetail.setId(rs.getInt("id"));
 			redPacketDetail.setPass(rs.getInt("pass"));
 			redPacketDetail.setMoney(rs.getInt("money"));
-			redPacketDetail.setTakeuser(rs.getInt("takeuser"));
+			redPacketDetail.setTakeuser(rs.getString("takeuser"));
 			redPacketDetail.setTaketime(rs.getTimestamp("taketime"));
 		}
 		DBUtil.close(rs, pst, conn);
@@ -69,11 +69,11 @@ public class RedPacketDetailDB {
 	 * 加入用户信息
 	 * 修改二维码为被扫码过的状态
 	 */
-	public boolean updateTakeUser(int id,int takeuser) throws Exception{
+	public boolean updateTakeUser(int id,String takeuser) throws Exception{
 		String sq = "UPDATE packet_detail SET takeuser=?,taketime=now() WHERE id=?";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst = conn.prepareStatement(sq);
-		pst.setInt(1,takeuser);
+		pst.setString(1,takeuser);
 		pst.setInt(2,id);
 		int count=pst.executeUpdate();
 		DBUtil.close(null, pst, conn);
@@ -94,7 +94,7 @@ public class RedPacketDetailDB {
 			TakeDetail mTakeDetail=new TakeDetail();
 			mTakeDetail.setPass(rs.getInt("pass"));
 			mTakeDetail.setMoney(rs.getInt("money"));
-			mTakeDetail.setTakeuser(rs.getInt("takeuser"));
+			mTakeDetail.setTakeuser(rs.getString("takeuser"));
 			mTakeDetail.setTaketime(rs.getTimestamp("taketime"));
 			mTakeDetail.setNickname(rs.getString("nickname"));
 			mTakeDetail.setUsericon(rs.getString("usericon"));

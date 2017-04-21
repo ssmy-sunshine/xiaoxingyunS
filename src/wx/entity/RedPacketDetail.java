@@ -15,7 +15,7 @@ public class RedPacketDetail {
 	/**子红包金额*/
 	private double money;
 	/**领取的用户id*/
-	private int takeuser;
+	private String takeuser;
 	/**领取时间*/
 	private String taketime;
 	
@@ -37,10 +37,10 @@ public class RedPacketDetail {
 	public void setMoney(double money) {
 		this.money = money;
 	}
-	public int getTakeuser() {
+	public String getTakeuser() {
 		return takeuser;
 	}
-	public void setTakeuser(int takeuser) {
+	public void setTakeuser(String takeuser) {
 		this.takeuser = takeuser;
 	}
 	public String getTaketime() {

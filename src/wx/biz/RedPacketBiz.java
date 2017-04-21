@@ -53,7 +53,7 @@ public class RedPacketBiz {
 	 * @param takeuser 用户id
 	 * @return 成功true; 失败false;
 	 */
-	public void takeByPass(int pass,int takeuser) throws Exception{
+	public void takeByPass(int pass,String takeuser) throws Exception{
 		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
 		//根据口令查询可抢的红包
 		int canTakeId=mRedPacketDetailDB.getCanTakeId(pass);
