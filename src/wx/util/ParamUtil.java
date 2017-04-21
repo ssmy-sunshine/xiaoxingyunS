@@ -11,19 +11,19 @@ public class ParamUtil {
 	
 	public static String getString(HttpServletRequest request,String paramKey) throws ParamException{
 		String value=request.getParameter(paramKey);
-		if(value==null) throw new ParamException(paramKey);
+		if(InfoUtil.isTextEmpty(value)) throw new ParamException(paramKey);
 		return value;
 	}
 	
 	public static double getDouble(HttpServletRequest request,String paramKey) throws ParamException{
 		String value=request.getParameter(paramKey);
-		if(value==null) throw new ParamException(paramKey);
+		if(InfoUtil.isTextEmpty(value)) throw new ParamException(paramKey);
 		return Double.parseDouble(value);
 	}
 	
 	public static int getInt(HttpServletRequest request,String paramKey) throws ParamException{
 		String value=request.getParameter(paramKey);
-		if(value==null) throw new ParamException(paramKey);
+		if(InfoUtil.isTextEmpty(value)) throw new ParamException(paramKey);
 		return Integer.parseInt(value);
 	}
 	

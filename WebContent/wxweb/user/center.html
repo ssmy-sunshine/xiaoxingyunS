@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>生活处处充满小幸运</title>
+		
+		<link rel="stylesheet" href="../fonts/iconfont.css">
+		<link rel="stylesheet" href="../css/layer.css">
+		<link rel="stylesheet" href="../css/app.css">
+		<link rel="stylesheet" href="../css/ticket.css">
+		<style type="text/css">
+			body{background-color: #eee}
+			.userinfo{
+				position: relative;
+				background-color: white;
+				padding-bottom: 14px;
+			}
+			.userinfo .usericon{
+				width: 64px;;
+				height: 64px;
+				margin: 12px 0 8px 18px;
+				border-radius: 50%;
+			}
+			.userinfo .username{
+				margin-left: 20px;
+			}
+			.userinfo .balance{
+				position: absolute;
+				top: 14px;
+				right: 5%;
+				line-height: 22px;
+			}
+			.userinfo .withdraw{
+				position: absolute;
+				bottom: 12px;
+				right: 5%;
+				font-size: 14px;
+				padding: 8px 28px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wb-head">
+			<a class="wb-back iconfont icon-fanhui"></a>
+			<p class="wb-title">我的钱包</p>
+		</div>
+		<div class="wb-content">
+			<div class="userinfo">
+				<img class="usericon" src="../img/usericon-max.png" />
+				<p class="username">小小幸运</p>
+				<div class="balance">
+					<p><span>积分:</span><span id="scoreData" class="red">50</span></p>
+					<p><span>红包余额:</span><span id="balanceData" class="monery red">0.00</span></p>
+				</div>
+				<p class="withdraw wb-btn btn-red-radius">霸气提现</p>
+			</div>
+			<div id="ticketList"></div>
+		</div>
+	</body>
+
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../js/app.js" charset="utf-8"></script>
+	<script src="../js/layer.js" charset="utf-8"></script>
+	<script src="../js/ticket.js" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(function(){
+			var score=getScoreStr(5);
+			var ticket=getTicketStr(10);
+			$("#ticketList").html(score+ticket);
+		});
+	</script>
+
+</html>

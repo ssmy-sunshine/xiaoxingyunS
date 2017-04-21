@@ -83,7 +83,7 @@ public class RedPacketSL {
 	/**抢红包*/
 	private void takeByPass(HttpServletRequest request) throws Exception{
 		int pass=ParamUtil.getInt(request, "pass");
-		int takeuser=ParamUtil.getInt(request, "takeuser");
+		int takeuser=ParamUtil.getInt(request, "Uid");
 		new RedPacketBiz().takeByPass(pass, takeuser);
 	}
 	

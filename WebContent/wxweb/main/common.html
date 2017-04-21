@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>生活处处充满小幸运</title>
+		
+		<link rel="stylesheet" href="../fonts/iconfont.css">
+		<link rel="stylesheet" href="../css/layer.css">
+		<link rel="stylesheet" href="../css/app.css">
+		<style type="text/css">
+			.wb-head~.wb-content{
+				padding-top: 100px;
+			}
+			.starwarp{
+				padding: 10px;
+				text-align: center;
+			}
+			.starwarp .stars{
+				margin-left: 12px;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.starwarp .iconfont{
+				font-size: 20px;
+				padding: 5px;
+			}
+			.starwarp .icon-xingxing0{
+				color: gray;
+			}
+			.starwarp .icon-xingxing1{
+				color: #E85045;
+			}
+			.common{
+				width: 80%;
+				margin: 30px 10%;
+				padding: 10px;
+				border-radius: 6px;
+				border: 1px solid #eee;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wb-head">
+			<a class="wb-back iconfont icon-fanhui"></a>
+			<p class="wb-title">商家评论</p>
+		</div>
+		<div class="wb-content">
+			<div class="starwarp"><span>口味:</span><div id="starTaste" class="stars"></div></div>
+			<div class="starwarp"><span>服务:</span><div id="starServer" class="stars"></div></div>
+		</div>
+		<textarea class="common" rows="4" placeholder="欢迎留下您的评价与建议~"></textarea>
+		<div class="wb-footer wb-btn btn-red">提交</div>
+	</body>
+
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../js/app.js" charset="utf-8"></script>
+	<script src="../js/StarScore.js" charset="utf-8"></script>
+	<script src="../js/layer.js" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(function(){
+			new StarScore(document.getElementById("starTaste")).init()
+			new StarScore(document.getElementById("starServer")).init()
+		});
+	</script>
+
+</html>
