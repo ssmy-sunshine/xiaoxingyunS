@@ -8,6 +8,7 @@ import wx.biz.RedPacketBiz;
 import wx.db.RedPacketDB;
 import wx.db.RedPacketDetailDB;
 import wx.entity.RedPacket;
+import wx.entity.RedPacketDetail;
 import wx.entity.Result;
 import wx.entity.TakeDetail;
 import wx.util.ParamUtil;
@@ -41,10 +42,15 @@ public class RedPacketSL {
 			RedPacket mRedPacket=getDetail(request);
 			return mRedPacket;
 			
+		}else if("getbytakeuser".equals(SLM)){
+			//根据口令查询当前用户抢的红包  All?SL=RedPacket&SLM=getbytakeuser
+			RedPacketDetail redPacketDetail=getByTakeuser(request);
+			return redPacketDetail;
+			
 		}else if("takebypass".equals(SLM)){
 			//抢红包  All?SL=RedPacket&SLM=takebypass
-			takeByPass(request);
-			return Result.MSG_DEFAULT;
+			Result mResult=takeByPass(request);
+			return mResult;
 			
 		}else if("takedetail".equals(SLM)){
 			//查询抢红包明细  All?SL=RedPacket&SLM=takedetail
@@ -56,7 +62,6 @@ public class RedPacketSL {
 		}
 	}
 	
-
 	/**发红包,返回红包口令*/
 	private int create(HttpServletRequest request) throws Exception{
 		double totalMoney=ParamUtil.getDouble(request, "money");
@@ -80,11 +85,20 @@ public class RedPacketSL {
 		return pass;
 	}
 	
-	/**抢红包*/
-	private void takeByPass(HttpServletRequest request) throws Exception{
+	/**根据口令查询当前用户抢的红包*/
+	private RedPacketDetail getByTakeuser(HttpServletRequest request) throws Exception {
 		int pass=ParamUtil.getInt(request, "pass");
 		String takeuser=ParamUtil.getString(request, "Uid");
-		new RedPacketBiz().takeByPass(pass, takeuser);
+		RedPacketDetail takeBag=new RedPacketDetailDB().getByTakeuser(pass,takeuser);
+		return takeBag;
+	}
+	
+	/**抢红包*/
+	private Result takeByPass(HttpServletRequest request) throws Exception{
+		int pass=ParamUtil.getInt(request, "pass");
+		String takeuser=ParamUtil.getString(request, "Uid");
+		Result mResult=new RedPacketBiz().takeByPass(pass, takeuser);
+		return mResult;
 	}
 	
 	/**根据商家查询红包列表*/

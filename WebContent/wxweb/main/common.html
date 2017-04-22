@@ -28,7 +28,7 @@
 				vertical-align: middle;
 			}
 			.starwarp .iconfont{
-				font-size: 20px;
+				font-size: 25px;
 				padding: 5px;
 			}
 			.starwarp .icon-xingxing0{
@@ -57,7 +57,7 @@
 			<div class="starwarp"><span>服务:</span><div id="starServer" class="stars"></div></div>
 		</div>
 		<textarea class="common" rows="4" placeholder="欢迎留下您的评价与建议~"></textarea>
-		<div class="wb-footer wb-btn btn-red">提交</div>
+		<div id="submit" class="wb-footer wb-btn btn-red">提交</div>
 	</body>
 
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -66,8 +66,13 @@
 	<script src="../js/layer.js" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
-			new StarScore(document.getElementById("starTaste")).init()
-			new StarScore(document.getElementById("starServer")).init()
+			new StarScore(document.getElementById("starTaste")).init();
+			new StarScore(document.getElementById("starServer")).init();
+			//提交
+			$("#submit").click(function(){
+				layerUtil.toast("感谢您的评价与建议~");
+				openWindow("../main/main.html");
+			})
 		});
 	</script>
 

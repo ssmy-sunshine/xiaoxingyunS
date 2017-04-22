@@ -19,6 +19,7 @@ body {
 html,body{height: 100%}
 ul{list-style-type: none}
 /*输入框光标对齐*/
+textarea,
 input,
 input::-webkit-input-placeholder{
 	font-size: 16px;
@@ -171,7 +172,7 @@ img{width:100%; height:auto; vertical-align:bottom; }
 /*蓝色按钮*/
 .btn-blue{background-color: #1AA8E3}
 /*红色按钮*/
-.btn-red{background-color: #E85045}
+.btn-red{background-color: #E83827}
 /*红色圆角按钮*/
 .btn-red-radius{
 	display: inline-block;

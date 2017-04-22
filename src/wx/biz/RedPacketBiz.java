@@ -7,6 +7,7 @@ import wx.db.RedPacketDB;
 import wx.db.RedPacketDetailDB;
 import wx.entity.RedPacket;
 import wx.entity.RedPacketDetail;
+import wx.entity.Result;
 import wx.exception.BizException;
 import wx.util.InfoUtil;
 
@@ -53,14 +54,41 @@ public class RedPacketBiz {
 	 * @param takeuser 用户id
 	 * @return 成功true; 失败false;
 	 */
-	public void takeByPass(int pass,String takeuser) throws Exception{
+	public Result takeByPass(int pass,String takeuser) throws Exception{
+		Result mResult=new Result();
 		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
+		//查询用户是否已抢过
+		RedPacketDetail takeBag=mRedPacketDetailDB.getByTakeuser(pass,takeuser);
+		if(takeBag!=null){
+			//已抢过红包,返回已抢红包信息
+			mResult.setCode(2001);
+			mResult.setMsg(takeBag);
+			return mResult;
+		}
+		
 		//根据口令查询可抢的红包
-		int canTakeId=mRedPacketDetailDB.getCanTakeId(pass);
-		if(canTakeId==0) throw new BizException("红包已抢完");
-		//给红包设置用户信息(抢红包)
-		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeId, takeuser);
-		if(!success) throw new BizException("手慢了,红包已抢光");
+		RedPacketDetail canTakeBag=mRedPacketDetailDB.getCanTakeId(pass);
+		if(canTakeBag==null){
+			//红包已抢完
+			mResult.setCode(2002);
+			mResult.setMsg("红包已抢完");
+			return mResult;
+		}
+		
+		//标记用户抢成功
+		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeBag.getId(), takeuser);
+		if(!success){
+			//手慢了,红包已抢光
+			mResult.setCode(2003);
+			mResult.setMsg("手慢了,红包已抢光");
+			return mResult;
+			
+		}
+		
+		//抢成功
+		mResult.setCode(2000);
+		mResult.setMsg(canTakeBag);
+		return mResult;
 	}
 	
 	/**生成红包口令,6位随机数 */

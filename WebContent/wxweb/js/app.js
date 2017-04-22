@@ -92,7 +92,7 @@ function ajaxData(url,success,param,err,hideWait) {
 		//重试次数,默认3次
 		if(!param.tryNum) param.tryNum=0;
 		if(param.tryNum>=3) {
-			mui.toast("请求超时,请重试. v"+param.version);
+			layerUtil.toast("请求超时,请重试");
 			return;
 		}
 		param.tryNum++;
@@ -139,7 +139,7 @@ function ajaxData(url,success,param,err,hideWait) {
 					//请求异常
 					var noToastErr=err&&err(data);//错误回调 返回true则不提示异常
 					if (noToastErr!=true) {
-						layerUtil.toast(data.Msg+" v"+param.version);
+						layerUtil.toast(data.Msg);
 					}
 				}
 			},
@@ -157,7 +157,7 @@ function ajaxData(url,success,param,err,hideWait) {
 					//错误回调 返回true则不提示异常
 					var noToastErr=err&&err();
 					if (noToastErr!=true) {
-						layerUtil.toast("网速不给力,请重试."+xhr.status+" v"+param.version);
+						layerUtil.toast("网速不给力,请重试."+xhr.status);
 					}
 				}
 			}
@@ -172,12 +172,24 @@ function ajaxData(url,success,param,err,hideWait) {
 var UserObj={
 	/*获取本地缓存的用户Uid*/
 	getUid : function() {
-		var Uid=localStorage.getItem("Uid")||0;
-		if (Uid) Uid=Number(Uid);
+		var Uid=localStorage.getItem("Uid");
+		if(!Uid){
+			Uid=UserObj.getRandomNum(32);
+			UserObj.setUid(Uid);
+		}
 		return Uid;
 	},
 	setUid : function(Uid){
 		setLocalStorage("Uid",Uid);
+	},
+	getRandomNum : function(n) {
+	    var res = "";
+	    var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+	    for(var i = 0; i < n ; i ++) {
+	        var id = Math.ceil(Math.random()*35);
+	        res += chars[id];
+	    }
+	    return res;
 	},
 	/*获取本地缓存的用户手机号*/
 	getTel : function() {
@@ -282,15 +294,26 @@ var UserObj={
 	}
 }
 
+/*设置localStorage,如果value不存在则移除*/
+function setLocalStorage(key,value){
+	if(value){
+		localStorage.setItem(key,value);
+	}else{
+		localStorage.removeItem(key);
+	}
+}
+
 /*layerUtil*/
 var layerUtil={
+	index:0,
 	/*显示进度条*/
 	showWaiting:function(){
-		layer.open({type: 2,shade: false});
+		if(layerUtil.index==0) layerUtil.index=layer.open({type: 2,shade: false});
 	},
 	/*关闭进度条*/
 	closeWaiting:function(){
-		layer.close(layer.index);
+		layer.close(layerUtil.index);
+		layerUtil.index=0;
 	},
 	/*提示*/
 	toast:function(msg){

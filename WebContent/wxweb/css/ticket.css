@@ -13,6 +13,7 @@
 .tk-warp .tkicon{
 	width: 46px;
 	height: 46px;
+	border: 1px solid white;
 	margin: 10px 10px 10px 16px;
 	border-radius: 50%;
 	vertical-align: middle;

@@ -13,8 +13,8 @@
 		
 		<link rel="stylesheet" href="../fonts/iconfont.css">
 		<link rel="stylesheet" href="../css/layer.css">
-		<link rel="stylesheet" href="../css/app.css">
-		<link rel="stylesheet" href="../css/ticket.css">
+		<link rel="stylesheet" href="../css/app.css?v=1">
+		<link rel="stylesheet" href="../css/ticket.css?v=1">
 		<style type="text/css">
 			.bg-top{
 				z-index: 1;
@@ -45,9 +45,14 @@
 				font-size: 14px;
 				margin-top: 20px;
 			}
+			.takeout{
+				font-size: 20px;
+				margin-top: 35px;
+				color: #E85045;
+			}
 			.takemoney{
 				font-size: 40px;
-				margin-top: 35px;
+				margin-top: 25px;
 			}
 			.taketip{
 				padding: 8px;
@@ -132,7 +137,7 @@
 	<body>
 		<div class="bg-top"></div>
 		<!--红包-->
-		<div class="reg-warp">
+		<div class="reg-warp hide">
 			<div class="reg-top">
 				<p class="reg-tip">抢到一个小幸运红包</p>
 			</div>
@@ -141,20 +146,27 @@
 		<div class="wb-content">
 			<img class="usericon" src="../img/logo.png"/>
 			<p class="busname">真功夫的幸运小红包</p>
-			<p class="remark">欢迎您的下次光临~</p>
-			<p class="takemoney monery">8.88</p>
-			<p class="taketip">已存入账户,可提现到微信零钱</p>
-			<div class="tk-warp tkbg1">
-				<img class="tkicon" src="../img/logo.png"/>
-				<span class="tkname">赠送5积分</span>
-				<p class="tktip-left">10积分=1元</p>
-				<p class="tktip-right">全场通用</p>
-			</div>
-			<div class="tk-warp tkbg2">
-				<img class="tkicon" src="../img/logo.png"/>
-				<span class="tkname">赠送5元代金券</span>
-				<p class="tktip-left">全场通用</p>
-				<p class="tktip-right">有效期至: 2015.04.06</p>
+			<div class="resultinfo hide">
+				<p class="remark">欢迎您的下次光临~</p>
+				<p class="takeout hide"></p>
+				<div class="takeinfo hide">
+					<p class="takemoney monery">0.00</p>
+					<p class="taketip">已存入账户,可提现到微信零钱</p>
+				</div>
+				<div id="ticketList">
+					<!--<div class="tk-warp tkbg1">
+						<img class="tkicon" src="../img/logo.png"/>
+						<span class="tkname">赠送5积分</span>
+						<p class="tktip-left">10积分=1元</p>
+						<p class="tktip-right">全场通用</p>
+					</div>
+					<div class="tk-warp tkbg2">
+						<img class="tkicon" src="../img/logo.png"/>
+						<span class="tkname">赠送5元代金券</span>
+						<p class="tktip-left">全场通用</p>
+						<p class="tktip-right">有效期至: 2015.04.06</p>
+					</div>-->
+				</div>
 			</div>
 		</div>
 		<div class="wb-footer">
@@ -164,13 +176,37 @@
 	</body>
 
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-	<script src="../js/app.js" charset="utf-8"></script>
 	<script src="../js/layer.js" charset="utf-8"></script>
-	<script src="../js/ticket.js" charset="utf-8"></script>
+	<script src="../js/app.js?v=1" charset="utf-8"></script>
+	<script src="../js/ticket.js?v=1" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
+		var curRedBagInfo;
 		$(function(){
 			//红包口令
 			var pass=getUrlParam("pass");
+			
+			//查询当前红包信息
+			getRegbagInfo(pass,function(data){
+				if(data){
+					curRedBagInfo=data;
+					//根据口令查询当前用户的红包,检查是否已抢过
+					getRegbagByPass(pass,function(data){
+						if(data){
+							//已抢过
+							$(".resultinfo").show();
+							$(".takeinfo").show();
+							$(".takemoney").text(data.money.toFixed(2));
+						}else{
+							//未抢过
+							$(".reg-warp").show();
+						}
+					})
+				}else{
+					$(".resultinfo").show();
+					$(".takeout").text("当前红包不存在").show();
+				}
+			});
+			
 			//抢红包
 			$("#regTake").click(function() {
 				if(!pass){
@@ -184,7 +220,7 @@
 			})
 			
 			//我的钱包
-			$(".btn-user").click(function(){
+			$(".taketip,.btn-user").click(function(){
 				openWindow("../user/center.html");
 			})
 			//商家评价
@@ -193,13 +229,48 @@
 			})
 		});
 		
+		
+		/*根据口令查询当前用户的红包,检查是否已抢过*/
+		function getRegbagByPass(pass,callback){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=getbytakeuser",function(data){
+				callback&&callback(data);
+			},param,function(){
+				callback&&callback();
+			})
+		}
+		
+		/*查询当前红包信息*/
+		function getRegbagInfo(pass,callback){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=getdetail",function(data){
+				callback&&callback(data);
+			},param,function(){
+				callback&&callback();
+			})
+		}
+		
 		/*抢红包*/
 		function takeRegbag(pass){
 			var param={"pass":pass};
-			ajaxData(Host+"All?SL=RedPacket&SLM=takebypass",function(){
+			ajaxData(Host+"All?SL=RedPacket&SLM=takebypass",function(data){
 				//成功
-				
-				//隐藏红包布局
+				if(data.Code==2000||data.Code==2001){
+					var redbag=data.Msg;
+					//已抢过红包,返回已抢红包信息
+					$(".takemoney").text(redbag.money.toFixed(2));
+					$(".takeinfo").show();
+					if(curRedBagInfo){
+						var st='';
+						if(curRedBagInfo.score) st+=getScoreStr(curRedBagInfo.score);
+						if(curRedBagInfo.ticketId) st+=getTicketStr(curRedBagInfo.ticketId);
+						$("#ticketList").html(st);
+					}
+				}else{
+					//红包已抢完
+					$(".takeout").text(data.Msg||"手慢了,红包已抢光");
+				}
+				$(".resultinfo").show();
 				$(".reg-warp").hide();
 			},param,function(){
 				$("#regTake").removeClass("anim_rotate");

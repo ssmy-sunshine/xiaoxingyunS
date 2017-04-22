@@ -3,6 +3,7 @@ package wx.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import wx.entity.RedPacketDetail;
@@ -29,18 +30,34 @@ public class RedPacketDetailDB {
 	}
 	
 	/**
-	 * 根据口令查询可抢红包 返回红包id
+	 * 根据口令查询可抢红包
 	 */
-	public int getCanTakeId(int pass) throws Exception{
-		int canTakeId=0;
-		String sq="SELECT id FROM packet_detail WHERE pass=? AND takeuser IS NULL LIMIT 1";
+	public RedPacketDetail getCanTakeId(int pass) throws Exception{
+		RedPacketDetail redPacketDetail=null;
+		String sq="SELECT * FROM packet_detail WHERE pass=? AND takeuser IS NULL LIMIT 1";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
 		pst.setInt(1, pass);
 		ResultSet rs=pst.executeQuery();
-		if(rs.next()) canTakeId=rs.getInt("id");
+		if(rs.next()) redPacketDetail=getByResultSet(rs);
 		DBUtil.close(rs, pst, conn);
-		return canTakeId;
+		return redPacketDetail;
+	}
+	
+	/**
+	 * 根据口令查询当前用户抢的红包
+	 */
+	public RedPacketDetail getByTakeuser(int pass,String takeuser) throws Exception{
+		RedPacketDetail redPacketDetail=null;
+		String sq="SELECT * FROM packet_detail WHERE pass=? AND takeuser=? LIMIT 1";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setInt(1, pass);
+		pst.setString(2, takeuser);
+		ResultSet rs=pst.executeQuery();
+		if(rs.next()) redPacketDetail=getByResultSet(rs);
+		DBUtil.close(rs, pst, conn);
+		return redPacketDetail;
 	}
 	
 	/**
@@ -53,14 +70,7 @@ public class RedPacketDetailDB {
 		PreparedStatement pst=conn.prepareStatement(sq);
 		pst.setInt(1, id);
 		ResultSet rs=pst.executeQuery();
-		if (rs.next()) {
-			redPacketDetail=new RedPacketDetail();
-			redPacketDetail.setId(rs.getInt("id"));
-			redPacketDetail.setPass(rs.getInt("pass"));
-			redPacketDetail.setMoney(rs.getInt("money"));
-			redPacketDetail.setTakeuser(rs.getString("takeuser"));
-			redPacketDetail.setTaketime(rs.getTimestamp("taketime"));
-		}
+		if(rs.next()) redPacketDetail=getByResultSet(rs);
 		DBUtil.close(rs, pst, conn);
 		return redPacketDetail;
 	}
@@ -102,6 +112,19 @@ public class RedPacketDetailDB {
 		}
 		DBUtil.close(rs, pst, conn);
 		return list;
+	}
+	
+	/**
+	 * 从ResultSet封装RedPacketDetail
+	 */
+	private RedPacketDetail getByResultSet(ResultSet rs) throws SQLException{
+		RedPacketDetail redPacketDetail=new RedPacketDetail();
+		redPacketDetail.setId(rs.getInt("id"));
+		redPacketDetail.setPass(rs.getInt("pass"));
+		redPacketDetail.setMoney(rs.getInt("money"));
+		redPacketDetail.setTakeuser(rs.getString("takeuser"));
+		redPacketDetail.setTaketime(rs.getTimestamp("taketime"));
+		return redPacketDetail;
 	}
 	
 }
