@@ -13,8 +13,8 @@
 		
 		<link rel="stylesheet" href="../fonts/iconfont.css">
 		<link rel="stylesheet" href="../css/layer.css">
-		<link rel="stylesheet" href="../css/app.css">
-		<link rel="stylesheet" href="../css/ticket.css">
+		<link rel="stylesheet" href="../css/app.css?v=1">
+		<link rel="stylesheet" href="../css/ticket.css?v=1">
 		<style type="text/css">
 			body{background-color: #eee}
 			.userinfo{
@@ -29,7 +29,8 @@
 				border-radius: 50%;
 			}
 			.userinfo .username{
-				margin-left: 28px;
+				font-size: 14px;
+				margin-left: 16px;
 			}
 			.userinfo .balance{
 				position: absolute;
@@ -55,9 +56,9 @@
 		<div class="wb-content">
 			<div class="userinfo">
 				<img class="usericon" src="../img/usericon-max.png" />
-				<p class="username">小小幸运</p>
+				<p class="username">小幸运</p>
 				<div class="balance">
-					<p><span>积分:</span><span id="scoreData" class="red">50</span></p>
+					<p><span>积分:</span><span id="scoreData" class="red">0</span></p>
 					<p><span>红包余额:</span><span id="balanceData" class="monery red">0.00</span></p>
 				</div>
 				<p class="withdraw wb-btn btn-red-radius">霸气提现</p>
@@ -68,18 +69,21 @@
 	</body>
 
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-	<script src="../js/app.js" charset="utf-8"></script>
 	<script src="../js/layer.js" charset="utf-8"></script>
-	<script src="../js/ticket.js" charset="utf-8"></script>
+	<script src="../js/app.js?v=1" charset="utf-8"></script>
+	<script src="../js/ticket.js?v=1" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
-			var score=getScoreStr(5);
-			var ticket=getTicketStr(10);
-			$("#ticketList").html(score+ticket);
+			var st='';
+			st+=getScoreStr(5);
+			st+=getTicketStr(10);
+			$("#ticketList").html(st);
 			
 			$(".wb-footer").click(function(){
 				openWindow("../main/main.html");
 			})
+			
+			$(".username").html(UserObj.getNickname());
 		});
 	</script>
 

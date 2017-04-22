@@ -59,6 +59,12 @@
 				font-size: 12px;
 				color: #40AFFE;
 			}
+			.redbag-detail{
+				margin-top: 10px;
+				padding: 10px;
+				font-size: 14px;
+				color: #E85045;
+			}
 			/*红包*/
 			.reg-warp{
 				z-index: 9990;
@@ -145,7 +151,7 @@
 		</div>
 		<div class="wb-content">
 			<img class="usericon" src="../img/logo.png"/>
-			<p class="busname">真功夫的幸运小红包</p>
+			<p class="busname">不二食堂的幸运小红包</p>
 			<div class="resultinfo hide">
 				<p class="remark">欢迎您的下次光临~</p>
 				<p class="takeout hide"></p>
@@ -154,7 +160,7 @@
 					<p class="taketip">已存入账户,可提现到微信零钱</p>
 				</div>
 				<div id="ticketList">
-					<!--<div class="tk-warp tkbg1">
+					<div class="tk-warp tkbg1">
 						<img class="tkicon" src="../img/logo.png"/>
 						<span class="tkname">赠送5积分</span>
 						<p class="tktip-left">10积分=1元</p>
@@ -165,8 +171,9 @@
 						<span class="tkname">赠送5元代金券</span>
 						<p class="tktip-left">全场通用</p>
 						<p class="tktip-right">有效期至: 2015.04.06</p>
-					</div>-->
+					</div>
 				</div>
+				<p class="redbag-detail">查看小伙伴们的手气 ></p>
 			</div>
 		</div>
 		<div class="wb-footer">
@@ -184,6 +191,7 @@
 		$(function(){
 			//红包口令
 			var pass=getUrlParam("pass");
+			if(!pass) return;
 			
 			//查询当前红包信息
 			getRegbagInfo(pass,function(data){
@@ -226,6 +234,10 @@
 			//商家评价
 			$(".btn-com").click(function(){
 				openWindow("../main/common.html");
+			})
+			//小伙伴手气
+			$(".redbag-detail").click(function(){
+				if(curRedBagInfo&&curRedBagInfo.pass) openWindow("../main/takebagdetail.html?pass="+curRedBagInfo.pass);
 			})
 		});
 		

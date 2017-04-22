@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<title>生活处处充满小幸运</title>
+		
+		<link rel="stylesheet" href="../fonts/iconfont.css">
+		<link rel="stylesheet" href="../css/layer.css">
+		<link rel="stylesheet" href="../css/app.css?v=1">
+		<link rel="stylesheet" href="../css/ticket.css?v=1">
+		<style type="text/css">
+			.bg-top{
+				z-index: 1;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 80px;
+				background-color: #E85045;
+			    border-radius: 0 0 50% 50% / 0 0 35% 35%;
+			}
+			.wb-content{
+				z-index: 2;
+				position: relative;
+				padding-top: 40px;
+				text-align: center;
+			}
+			.usericon{
+				width: 80px;
+				height: 80px;
+				border-radius: 50%;
+				border: 2px solid #FAFAFA;
+			}
+			.busname{
+				margin-top: 14px;
+			}
+			.redbaginfo{
+				font-size: 14px;
+				margin-top: 15px;;
+			}
+			/*领取明细*/
+			.takeline{
+				width: 80%;
+				margin-top: 20px;
+				margin-left: 10%;
+				height: 1px;
+				background-color: #eee;
+			}
+			.taketitle{
+				position: relative;
+				top: -10px;
+				display: inline-block;
+				width: 120px;
+				font-size: 12px;
+				background-color: white;
+				text-align: center;
+			}
+			.takelist{
+				padding-bottom: 40px;
+			}
+			.takelist li{
+				position: relative;
+				padding: 10px 12px;
+				text-align: left;
+				border-bottom: 1px solid #eee;
+			}
+			.takelist .takeicon{
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				vertical-align: middle;
+			}
+			.takelist .takename{
+				font-size: 14px;
+				margin-left: 8px;
+				vertical-align: middle;
+			}
+			.takelist .takemoney{
+				position: absolute;
+				top: 15px;
+				right: 12px;
+				color: #FE2D66;
+			}
+			.takelist .taketime{
+				position: absolute;
+				right: 12px;
+				bottom: 2px;
+				font-size: 13px;
+				color: gray;
+			}
+		</style>
+	</head>
+
+	<body>
+		<p class="wb-back btn-circle iconfont icon-fanhui wb-head-left"></p>
+		<div class="bg-top"></div>
+		<div class="wb-content">
+			<img class="usericon" src="../img/logo.png"/>
+			<p class="busname">不二食堂的幸运小红包</p>
+			<p class="redbaginfo"><span>总额:</span> <span class="totalmoney pink monery">0.00</span> &nbsp; &nbsp;<span>个数:</span> <span class="count pink">0</span></p>
+			<p class="takeline"></p>
+			<p class="taketitle gray">领取明细 <span class="pink">( <span id="takecount">0</span> / <span class="count">0</span> )</span></p>
+			<ul id="takelist" class="takelist">
+				<!--<li>
+					<img class="takeicon" src="../img/logo.png"/>
+					<span class="takename">昵称</span>
+					<span class="takemoney">0.01</span>
+					<span class="taketime">2017-4-15 15:19:44</span>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="../js/layer.js" charset="utf-8"></script>
+	<script src="../js/app.js?v=1" charset="utf-8"></script>
+	<script src="../js/ticket.js?v=1" charset="utf-8"></script>
+	<script type="text/javascript" charset="utf-8">
+		var curRedBagInfo;
+		$(function(){
+			//红包口令
+			var pass=getUrlParam("pass");
+			if(!pass) return;
+			
+			//查询红包明细
+			getRedbagDetail(pass);
+			//查询领取明细
+			getTakeDetail(pass);
+		});
+		
+		
+		/*查询红包明细*/
+		function getRedbagDetail(pass){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=getdetail", function(data) {
+				$(".totalmoney").html(data.money.toFixed(2));
+				$(".count").html(data.count);
+				$("#remark").html(data.remark);
+			},param);
+		}
+		
+		/*查询领取明细*/
+		function getTakeDetail(pass){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=takedetail", function(data) {
+				var takelist=document.getElementById("takelist");
+				var len=data.length;
+				if (len==0) {
+					new EmptyBox("暂没有人领取~").show(takelist,"0px");
+				} else{
+					//明细列表
+					$("#takecount").html(len);
+					
+					var str='';
+					for (var i = 0; i < len; i++) {
+						var detail=data[i];
+						str+='<li>';
+						str+='<img class="takeicon" src="../img/logo.png" data-src="'+getImgpath(detail.usericon)+'" onload="loadimg(this)"/>';
+						str+='<span class="takename">'+getNickName(detail.takeuser)+'</span>';
+						str+='<span class="takemoney">'+detail.money.toFixed(2)+'</span>';
+						str+='<span class="taketime">'+detail.taketime+'</span>';
+						str+='</li>';
+					}
+					takelist.innerHTML=str;
+				}
+			},param);
+		}
+		
+		/*获取昵称*/
+		function getNickName(nickname){
+			if (nickname==UserObj.getUid()) {
+				return "我";
+			} else{
+				return nickname.substr(0,3)+"**"+nickname.substr(nickname.length-3,3);
+			}
+		}
+	</script>
+
+</html>

@@ -106,8 +106,8 @@ public class RedPacketDetailDB {
 			mTakeDetail.setMoney(rs.getInt("money"));
 			mTakeDetail.setTakeuser(rs.getString("takeuser"));
 			mTakeDetail.setTaketime(rs.getTimestamp("taketime"));
-			mTakeDetail.setNickname(rs.getString("nickname"));
-			mTakeDetail.setUsericon(rs.getString("usericon"));
+//			mTakeDetail.setNickname(rs.getString("nickname"));
+//			mTakeDetail.setUsericon(rs.getString("usericon"));
 			list.add(mTakeDetail);
 		}
 		DBUtil.close(rs, pst, conn);

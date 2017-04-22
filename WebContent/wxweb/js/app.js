@@ -218,7 +218,9 @@ var UserObj={
 	},
 	/*获取用户昵称*/
 	getNickname : function() {
-		return localStorage.getItem("UNickName");
+		var uid=UserObj.getUid();
+		return	"小幸运("+uid.substr(0,3)+"**"+uid.substr(uid.length-3,3)+")"
+//		return localStorage.getItem("UNickName");
 	},
 	setNickname : function(nickname) {
 		setLocalStorage("UNickName",nickname);
