@@ -58,8 +58,8 @@
 				<img class="usericon" src="../img/usericon-max.png" />
 				<p class="username">小幸运</p>
 				<div class="balance">
-					<p><span>积分:</span><span id="scoreData" class="red">0</span></p>
-					<p><span>红包余额:</span><span id="balanceData" class="monery red">0.00</span></p>
+					<p><span>积分:</span> <span id="scoreData" class="red">0</span></p>
+					<p><span>红包余额:</span> <span id="balanceData" class="monery red">0.00</span></p>
 				</div>
 				<p class="withdraw wb-btn btn-red-radius">霸气提现</p>
 			</div>
@@ -74,17 +74,33 @@
 	<script src="../js/ticket.js?v=1" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
-			var st='';
-			st+=getScoreStr(5);
-			st+=getTicketStr(10);
-			$("#ticketList").html(st);
-			
 			$(".wb-footer").click(function(){
 				openWindow("../main/main.html");
 			})
 			
 			$(".username").html(UserObj.getNickname());
+			
+			getAllData();
 		});
+		
+		/*查询当前用户金额,优惠券,积分总数*/
+		function getAllData(){
+			ajaxData(Host+"All?SL=RedPacket&SLM=getalldata",function(data){
+				//余额
+				$("#balanceData").text(data.allprice.toFixed(2));
+				var st='';
+				//积分
+				if(data.allscore){
+					$("#scoreData").text(data.allscore);
+					st+=getScoreStr("您总共有"+data.allscore);
+				}
+				//优惠券
+				if(data.numticket){
+					st+=getTicketStr("您总共有"+data.numticket+"张 10");
+				}
+				$("#ticketList").html(st);
+			})
+		}
 	</script>
 
 </html>

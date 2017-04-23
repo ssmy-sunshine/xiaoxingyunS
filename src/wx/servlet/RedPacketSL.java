@@ -57,6 +57,12 @@ public class RedPacketSL {
 			ArrayList<TakeDetail> list=takedetail(request);
 			return list;
 			
+		}else if("getalldata".equals(SLM)){
+			//查询当前用户金额,优惠券,积分总数  All?SL=RedPacket&SLM=getalldata
+			String takeuser=ParamUtil.getString(request, "takeuser");
+			JsonObject obj=new RedPacketDetailDB().getAllData(takeuser);
+			return obj;
+			
 		}else{
 			return null;
 		}

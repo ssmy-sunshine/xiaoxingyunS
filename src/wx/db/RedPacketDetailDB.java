@@ -10,6 +10,8 @@ import wx.entity.RedPacketDetail;
 import wx.entity.TakeDetail;
 import wx.util.DBUtil;
 
+import com.google.gson.JsonObject;
+
 /**
  * 表 packet_detail
  * id pass money takeuser taketime
@@ -103,7 +105,7 @@ public class RedPacketDetailDB {
 		while (rs.next()) {
 			TakeDetail mTakeDetail=new TakeDetail();
 			mTakeDetail.setPass(rs.getInt("pass"));
-			mTakeDetail.setMoney(rs.getInt("money"));
+			mTakeDetail.setMoney(rs.getDouble("money"));
 			mTakeDetail.setTakeuser(rs.getString("takeuser"));
 			mTakeDetail.setTaketime(rs.getTimestamp("taketime"));
 //			mTakeDetail.setNickname(rs.getString("nickname"));
@@ -115,13 +117,32 @@ public class RedPacketDetailDB {
 	}
 	
 	/**
+	 * 查询当前用户金额,优惠券,积分总数
+	 */
+	public JsonObject getAllData(String takeuser) throws Exception {
+		String sq="SELECT SUM(a.money) allprice,SUM(b.score) allscore,COUNT(b.ticketid) numticket FROM packet_detail a JOIN packets b ON a.pass=b.pass WHERE takeuser=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setString(1, takeuser);
+		ResultSet rs=pst.executeQuery();
+		JsonObject obj=new JsonObject();
+		if(rs.next()){
+			obj.addProperty("allprice", rs.getDouble("allprice"));
+			obj.addProperty("allscore", rs.getInt("allscore"));
+			obj.addProperty("numticket", rs.getInt("numticket"));
+		}
+		DBUtil.close(rs, pst, conn);
+		return obj;
+	}
+	
+	/**
 	 * 从ResultSet封装RedPacketDetail
 	 */
 	private RedPacketDetail getByResultSet(ResultSet rs) throws SQLException{
 		RedPacketDetail redPacketDetail=new RedPacketDetail();
 		redPacketDetail.setId(rs.getInt("id"));
 		redPacketDetail.setPass(rs.getInt("pass"));
-		redPacketDetail.setMoney(rs.getInt("money"));
+		redPacketDetail.setMoney(rs.getDouble("money"));
 		redPacketDetail.setTakeuser(rs.getString("takeuser"));
 		redPacketDetail.setTaketime(rs.getTimestamp("taketime"));
 		return redPacketDetail;

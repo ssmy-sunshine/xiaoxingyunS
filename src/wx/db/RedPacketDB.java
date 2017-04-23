@@ -61,7 +61,7 @@ public class RedPacketDB {
 			redPacket=new RedPacket();
 			redPacket.setId(rs.getInt("id"));
 			redPacket.setPass(rs.getInt("pass"));
-			redPacket.setMoney(rs.getInt("money"));
+			redPacket.setMoney(rs.getDouble("money"));
 			redPacket.setCount(rs.getInt("count"));
 			redPacket.setRemark(rs.getString("remark"));
 			redPacket.setScore(rs.getInt("score"));
@@ -92,7 +92,7 @@ public class RedPacketDB {
 			RedPacket redPacket=new RedPacket();
 			redPacket.setId(rs.getInt("id"));
 			redPacket.setPass(rs.getInt("pass"));
-			redPacket.setMoney(rs.getInt("money"));
+			redPacket.setMoney(rs.getDouble("money"));
 			redPacket.setCount(rs.getInt("count"));
 			redPacket.setBusid(rs.getInt("busid"));
 			redPacket.setRemark(rs.getString("remark"));
