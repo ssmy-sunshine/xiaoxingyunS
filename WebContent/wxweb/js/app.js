@@ -232,6 +232,20 @@ var UserObj={
 	setTestTag : function(type) {
 		setLocalStorage("USER_ISTEST",type);
 	},
+	/*获取用户积分*/
+	getScore : function() {
+		return localStorage.getItem("USER_SCORE")||0;
+	},
+	setScore : function(score) {
+		setLocalStorage("USER_SCORE",score);
+	},
+	/*获取用户余额*/
+	getMoney : function() {
+		return localStorage.getItem("USER_Money")||"0.00";
+	},
+	setMoney : function(money) {
+		setLocalStorage("USER_Money",money);
+	},
 	/*获取用户登录的token*/
 	getTK : function() {
 		return localStorage.getItem("TK");

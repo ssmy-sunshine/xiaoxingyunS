@@ -13,6 +13,7 @@ import wx.entity.Result;
 import wx.entity.TakeDetail;
 import wx.util.ParamUtil;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 /**
@@ -59,8 +60,20 @@ public class RedPacketSL {
 			
 		}else if("getalldata".equals(SLM)){
 			//查询当前用户金额,优惠券,积分总数  All?SL=RedPacket&SLM=getalldata
-			String takeuser=ParamUtil.getString(request, "takeuser");
+			String takeuser=ParamUtil.getString(request, "Uid");
 			JsonObject obj=new RedPacketDetailDB().getAllData(takeuser);
+			return obj;
+			
+		}else if("moneydetail".equals(SLM)){
+			//查询当前用户金额明细  All?SL=RedPacket&SLM=moneydetail
+			String takeuser=ParamUtil.getString(request, "Uid");
+			JsonArray obj=new RedPacketDetailDB().getMoneyDetail(takeuser);
+			return obj;
+			
+		}else if("scoredetail".equals(SLM)){
+			//查询当前用户积分明细  All?SL=RedPacket&SLM=scoredetail
+			String takeuser=ParamUtil.getString(request, "Uid");
+			JsonArray obj=new RedPacketDetailDB().getScoreDetail(takeuser);
 			return obj;
 			
 		}else{

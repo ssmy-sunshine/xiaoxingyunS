@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import wx.entity.RedPacketDetail;
 import wx.entity.TakeDetail;
 import wx.util.DBUtil;
+import wx.util.InfoUtil;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 /**
@@ -133,6 +135,46 @@ public class RedPacketDetailDB {
 		}
 		DBUtil.close(rs, pst, conn);
 		return obj;
+	}
+	
+	/**
+	 * 查询当前用户金额明细
+	 */
+	public JsonArray getMoneyDetail(String takeuser) throws Exception {
+		String sq="SELECT money,taketime FROM packet_detail WHERE takeuser=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setString(1, takeuser);
+		ResultSet rs=pst.executeQuery();
+		JsonArray arr=new JsonArray();
+		while(rs.next()){
+			JsonObject obj=new JsonObject();
+			obj.addProperty("money", rs.getDouble("money"));
+			obj.addProperty("taketime", InfoUtil.dateFormat(rs.getTimestamp("taketime")));
+			arr.add(obj);
+		}
+		DBUtil.close(rs, pst, conn);
+		return arr;
+	}
+	
+	/**
+	 * 查询当前用户积分明细
+	 */
+	public JsonArray getScoreDetail(String takeuser) throws Exception {
+		String sq="SELECT b.score,a.taketime FROM packet_detail a JOIN packets b ON a.pass=b.pass WHERE takeuser=?";
+		Connection conn=DBUtil.getConnection();
+		PreparedStatement pst=conn.prepareStatement(sq);
+		pst.setString(1, takeuser);
+		ResultSet rs=pst.executeQuery();
+		JsonArray arr=new JsonArray();
+		while(rs.next()){
+			JsonObject obj=new JsonObject();
+			obj.addProperty("score", rs.getDouble("score"));
+			obj.addProperty("taketime", InfoUtil.dateFormat(rs.getTimestamp("taketime")));
+			arr.add(obj);
+		}
+		DBUtil.close(rs, pst, conn);
+		return arr;
 	}
 	
 	/**

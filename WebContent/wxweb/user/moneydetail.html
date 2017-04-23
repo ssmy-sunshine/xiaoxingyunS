@@ -62,33 +62,33 @@
 				background-color: white;
 				text-align: center;
 			}
-			.takelist{
+			.detaillist{
 				padding-bottom: 40px;
 			}
-			.takelist li{
+			.detaillist li{
 				position: relative;
 				padding: 12px;
 				text-align: left;
 				border-bottom: 1px solid #eee;
 			}
-			.takelist .takeicon{
+			.detaillist .takeicon{
 				width: 32px;
 				height: 32px;
 				border-radius: 50%;
 				vertical-align: middle;
 			}
-			.takelist .takename{
+			.detaillist .takename{
 				font-size: 14px;
 				margin-left: 8px;
 				vertical-align: middle;
 			}
-			.takelist .takemoney{
+			.detaillist .takemoney{
 				position: absolute;
 				top: 14px;
 				right: 12px;
 				color: #FE2D66;
 			}
-			.takelist .taketime{
+			.detaillist .taketime{
 				position: absolute;
 				right: 12px;
 				bottom: 6px;
@@ -103,14 +103,13 @@
 		<div class="bg-top"></div>
 		<div class="wb-content">
 			<img class="usericon" src="../img/logo.png"/>
-			<p class="busname">不二食堂的幸运小红包</p>
-			<p class="redbaginfo"><span>总额:</span> <span class="totalmoney pink monery">0.00</span> &nbsp; <span>个数:</span> <span class="count pink">0</span></p>
+			<p class="redbaginfo"><span>当前余额:</span> <span class="totalmoney pink monery">0.00</span></p>
 			<p class="takeline"></p>
-			<p class="taketitle gray"><span>领取明细</span> <span class="pink">( <span id="takecount">0</span> / <span class="count">0</span> )</span></p>
-			<ul id="takelist" class="takelist">
+			<p class="taketitle gray">余额明细</p>
+			<ul id="detaillist" class="detaillist">
 				<!--<li>
 					<img class="takeicon" src="../img/logo.png"/>
-					<span class="takename">昵称</span>
+					<span class="takename">小幸运红包</span>
 					<span class="takemoney">0.01</span>
 					<span class="taketime">2017-4-15 15:19:44</span>
 				</li>-->
@@ -121,66 +120,32 @@
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="../js/layer.js" charset="utf-8"></script>
 	<script src="../js/app.js?v=6" charset="utf-8"></script>
-	<script src="../js/ticket.js?v=6" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
-		var curRedBagInfo;
 		$(function(){
-			//红包口令
-			var pass=getUrlParam("pass");
-			if(!pass) return;
+			$(".totalmoney").text(UserObj.getMoney());
 			
-			//查询红包明细
-			getRedbagDetail(pass);
-			//查询领取明细
-			getTakeDetail(pass);
-		});
-		
-		
-		/*查询红包明细*/
-		function getRedbagDetail(pass){
-			var param={"pass":pass};
-			ajaxData(Host+"All?SL=RedPacket&SLM=getdetail", function(data) {
-				$(".totalmoney").html(data.money.toFixed(2));
-				$(".count").html(data.count);
-				$("#remark").html(data.remark);
-			},param);
-		}
-		
-		/*查询领取明细*/
-		function getTakeDetail(pass){
-			var param={"pass":pass};
-			ajaxData(Host+"All?SL=RedPacket&SLM=takedetail", function(data) {
-				var takelist=document.getElementById("takelist");
+			//查询明细
+			ajaxData(Host+"All?SL=RedPacket&SLM=moneydetail", function(data) {
+				var detaillist=document.getElementById("detaillist");
 				var len=data.length;
 				if (len==0) {
-					new EmptyBox("暂没有人领取~").show(takelist,"0px");
+					new EmptyBox("暂无明细~").show(detaillist);
 				} else{
 					//明细列表
-					$("#takecount").html(len);
-					
 					var str='';
 					for (var i = 0; i < len; i++) {
 						var detail=data[i];
 						str+='<li>';
-						str+='<img class="takeicon" src="../img/logo.png" data-src="'+getImgpath(detail.usericon)+'" onload="loadimg(this)"/>';
-						str+='<span class="takename">'+getNickName(detail.takeuser)+'</span>';
+						str+='<img class="takeicon" src="../img/logo.png"/>';
+						str+='<span class="takename">小幸运红包</span>';
 						str+='<span class="takemoney">'+detail.money.toFixed(2)+'</span>';
 						str+='<span class="taketime">'+detail.taketime+'</span>';
 						str+='</li>';
 					}
-					takelist.innerHTML=str;
+					detaillist.innerHTML=str;
 				}
-			},param);
-		}
-		
-		/*获取昵称*/
-		function getNickName(nickname){
-			if (nickname==UserObj.getUid()) {
-				return "我";
-			} else{
-				return nickname.substr(0,3)+"**"+nickname.substr(nickname.length-3,3);
-			}
-		}
+			});
+		});
 	</script>
 
 </html>
