@@ -28,6 +28,14 @@ public class RedPacket {
 	private String taketypetip;
 	/**创建时间*/
 	private String createtime;
+	/**红包类型:普通红包,裂变红包*/
+	private String bagType;
+	/**裂变红包奖励*/
+	private double profit;
+	/**最多奖励*/
+	private double maxprofit;
+	/**通过哪个红包发放的*/
+	private int morepass;
 	
 	public int getId() {
 		return id;
@@ -99,6 +107,43 @@ public class RedPacket {
 	}
 	public void setCreatetime(Timestamp createtime) {
 		this.createtime = InfoUtil.dateFormat(createtime);
+	}
+	public double getProfit() {
+		return profit;
+	}
+	public void setProfit(double profit) {
+		this.profit = profit;
+		if(this.profit>0&&this.morepass==0){
+			setBagType("裂变红包");
+		}else{
+			setBagType("普通红包");
+		}
+	}
+	public double getMaxprofit() {
+		return maxprofit;
+	}
+	public void setMaxprofit(double maxprofit) {
+		this.maxprofit = maxprofit;
+	}
+	public int getMorepass() {
+		return morepass;
+	}
+	public void setMorepass(int morepass) {
+		this.morepass = morepass;
+		if(this.profit>0&&this.morepass==0){
+			setBagType("裂变红包");
+		}else{
+			setBagType("普通红包");
+		}
+	}
+	public String getBagType() {
+		return bagType;
+	}
+	public void setBagType(String bagType) {
+		this.bagType = bagType;
+	}
+	public void setCreatetime(String createtime) {
+		this.createtime = createtime;
 	}
 	
 }

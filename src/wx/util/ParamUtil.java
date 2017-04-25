@@ -35,4 +35,13 @@ public class ParamUtil {
 			return Integer.parseInt(value);
 		}
 	}
+	
+	public static double getDouble0(HttpServletRequest request,String paramKey){
+		String value=request.getParameter(paramKey);
+		if(InfoUtil.isTextEmpty(value)){
+			return 0;
+		}else{
+			return Double.parseDouble(value);
+		}
+	}
 }

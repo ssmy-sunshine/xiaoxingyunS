@@ -239,13 +239,6 @@ var UserObj={
 	setScore : function(score) {
 		setLocalStorage("USER_SCORE",score);
 	},
-	/*获取用户余额*/
-	getMoney : function() {
-		return localStorage.getItem("USER_Money")||"0.00";
-	},
-	setMoney : function(money) {
-		setLocalStorage("USER_Money",money);
-	},
 	/*获取用户登录的token*/
 	getTK : function() {
 		return localStorage.getItem("TK");
@@ -384,7 +377,7 @@ function EmptyBox(tip,btntext,btnCallback,src) {
 	this.tip = tip==null ? "亲,暂无相关数据~" : tip;//默认提示:"亲,暂无相关数据~"
 	this.btntext=btntext||"";
 	this.btnCallback=btnCallback;
-	this.src=src||"../img/loading-sq.png";
+	this.src=src||"../img/empty-icon.png";
 }
 EmptyBox.prototype.show=function(id_obj,top) {
 	var box = document.createElement("div");

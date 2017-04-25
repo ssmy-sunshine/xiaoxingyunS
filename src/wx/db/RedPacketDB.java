@@ -3,6 +3,7 @@ package wx.db;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import wx.entity.RedPacket;
@@ -10,7 +11,7 @@ import wx.util.DBUtil;
 
 /**
  * 表 packets
- * id pass money count busid remark score ticketid taketype createtime
+ * id pass money count busid remark score ticketid taketype createtime profit maxprofit morepass
  */
 public class RedPacketDB {
 	
@@ -18,7 +19,7 @@ public class RedPacketDB {
 	 * 添加新的红包
 	 */
 	public void insert(RedPacket redPacket) throws Exception{
-		String sq="INSERT INTO packets (pass,money,count,busid,remark,score,ticketid,taketype) VALUES (?,?,?,?,?,?,?,?)";
+		String sq="INSERT INTO packets (pass,money,count,busid,remark,score,ticketid,taketype,profit,maxprofit,morepass) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 		Connection conn=DBUtil.getConnection();
 		PreparedStatement pst=conn.prepareStatement(sq);
 		pst.setInt(1,redPacket.getPass());
@@ -29,6 +30,9 @@ public class RedPacketDB {
 		pst.setInt(6,redPacket.getScore());
 		pst.setInt(7,redPacket.getTicketId());
 		pst.setInt(8,redPacket.getTaketype());
+		pst.setDouble(9,redPacket.getProfit());
+		pst.setDouble(10,redPacket.getMaxprofit());
+		pst.setInt(11,redPacket.getMorepass());
 		pst.executeUpdate();
 		DBUtil.close(null, pst, conn);
 	}
@@ -58,16 +62,7 @@ public class RedPacketDB {
 		pst.setInt(1, pass);
 		ResultSet rs=pst.executeQuery();
 		if (rs.next()) {
-			redPacket=new RedPacket();
-			redPacket.setId(rs.getInt("id"));
-			redPacket.setPass(rs.getInt("pass"));
-			redPacket.setMoney(rs.getDouble("money"));
-			redPacket.setCount(rs.getInt("count"));
-			redPacket.setRemark(rs.getString("remark"));
-			redPacket.setScore(rs.getInt("score"));
-			redPacket.setTicketId(rs.getInt("ticketid"));
-			redPacket.setTaketype(rs.getInt("taketype"));
-			redPacket.setCreatetime(rs.getTimestamp("createtime"));
+			redPacket=getByResultSet(rs);
 		}
 		DBUtil.close(rs, pst, conn);
 		return redPacket;
@@ -89,21 +84,31 @@ public class RedPacketDB {
 		pst.setInt(3, size);
 		ResultSet rs=pst.executeQuery();
 		while (rs.next()) {
-			RedPacket redPacket=new RedPacket();
-			redPacket.setId(rs.getInt("id"));
-			redPacket.setPass(rs.getInt("pass"));
-			redPacket.setMoney(rs.getDouble("money"));
-			redPacket.setCount(rs.getInt("count"));
-			redPacket.setBusid(rs.getInt("busid"));
-			redPacket.setRemark(rs.getString("remark"));
-			redPacket.setScore(rs.getInt("score"));
-			redPacket.setTicketId(rs.getInt("ticketid"));
-			redPacket.setTaketype(rs.getInt("taketype"));
-			redPacket.setCreatetime(rs.getTimestamp("createtime"));
+			RedPacket redPacket=getByResultSet(rs);
 			list.add(redPacket);
 		}
 		DBUtil.close(rs, pst, conn);
 		return list;
 	}
 	
+	/**
+	 * 从ResultSet封装RedPacketDetail
+	 */
+	private RedPacket getByResultSet(ResultSet rs) throws SQLException{
+		RedPacket redPacket=new RedPacket();
+		redPacket.setId(rs.getInt("id"));
+		redPacket.setPass(rs.getInt("pass"));
+		redPacket.setMoney(rs.getDouble("money"));
+		redPacket.setCount(rs.getInt("count"));
+		redPacket.setBusid(rs.getInt("busid"));
+		redPacket.setRemark(rs.getString("remark"));
+		redPacket.setScore(rs.getInt("score"));
+		redPacket.setTicketId(rs.getInt("ticketid"));
+		redPacket.setTaketype(rs.getInt("taketype"));
+		redPacket.setCreatetime(rs.getTimestamp("createtime"));
+		redPacket.setProfit(rs.getDouble("profit"));
+		redPacket.setMaxprofit(rs.getDouble("maxprofit"));
+		redPacket.setMorepass(rs.getInt("morepass"));
+		return redPacket;
+	}
 }

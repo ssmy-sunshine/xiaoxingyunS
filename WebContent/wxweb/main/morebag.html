@@ -29,8 +29,7 @@
 			.wb-content{
 				z-index: 2;
 				position: relative;
-				padding-top: 40px;
-				padding-bottom: 80px;
+				padding: 40px 0 60px 0;
 				text-align: center;
 			}
 			.usericon{
@@ -40,27 +39,28 @@
 				border: 2px solid #FAFAFA;
 			}
 			.busname{
-				margin-top: 14px;
+				font-size: 18px;
+				margin-top: 18px;
 			}
-			.remark{
+			.resultinfo .remark{
 				font-size: 14px;
 				margin-top: 20px;
 			}
-			.takeout{
+			.resultinfo .takeout{
 				font-size: 20px;
 				margin-top: 35px;
 				color: #E85045;
 			}
-			.takemoney{
+			.takeinfo .takemoney{
 				font-size: 40px;
 				margin-top: 25px;
 			}
-			.taketip{
+			.takeinfo .taketip{
 				padding: 8px;
 				font-size: 12px;
 				color: #40AFFE;
 			}
-			.redbag-detail{
+			.resultinfo .redbag-detail{
 				margin-top: 10px;
 				padding: 10px;
 				font-size: 14px;
@@ -118,13 +118,15 @@
 			    from { transform: rotateY(180deg); }
 			    to { transform: rotateY(360deg); }
 			}
+			.redbaginfo{
+				margin-top: 20px;;
+			}
 			/*底部*/
 			.wb-footer{
-				padding: 4px;
-				background-color: white;
 				text-align: center;
 			}
-			.wb-footer p{
+			.wb-footer .btn-user,
+			.wb-footer .btn-com{
 				display: inline-block;
 				width: 38%;
 				padding: 10px;
@@ -140,12 +142,91 @@
 				background-color: #D44036;
 				color: white;
 			}
+			/*领取明细*/
+			.userbtile{
+				font-size: 15px;
+				margin-top: 10px;
+			}
+			.takeline{
+				width: 80%;
+				margin-top: 28px;
+				margin-left: 10%;
+				height: 1px;
+				background-color: #eee;
+			}
+			.taketitle{
+				position: relative;
+				top: -12px;
+				display: inline-block;
+				width: 120px;
+				font-size: 14px;
+				background-color: white;
+				text-align: center;
+			}
+			.takelist{
+				padding-bottom: 40px;
+			}
+			.takelist li{
+				position: relative;
+				padding: 12px 8px;
+				text-align: left;
+				border-bottom: 1px solid #eee;
+			}
+			.takelist .takeicon{
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				vertical-align: middle;
+			}
+			.takelist .takename{
+				font-size: 14px;
+				margin-left: 4px;
+				margin-top: -8px;
+				vertical-align: middle;
+			}
+			.takelist .takemoney{
+				position: absolute;
+				top: 15px;
+				right: 12px;
+				color: #FE2D66;
+			}
+			.takelist .taketime{
+				position: absolute;
+				left: 48px;
+				bottom: 4px;
+				font-size: 12px;
+				color: gray;
+			}
+			.takelist .inviter{
+				position: absolute;
+				right: 12px;
+				bottom: 4px;
+				font-size: 12px;
+				color: gray;
+			}
+			/*分享*/
+			.sharetipimg{
+				z-index: 9999999;
+				position: fixed;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				padding-right: 18px;
+				text-align: right;
+				background-color: rgba(0,0,0,.8)
+			}
+			.sharetipimg img{
+				width: 80%;
+			}
+			.userC-block{display: none;}
+			.userB-block{display: none;}
 		</style>
 	</head>
 
 	<body>
+		<p class="wb-back btn-circle iconfont icon-fanhui wb-head-left"></p>
 		<div class="bg-top"></div>
-		<!--红包-->
 		<div class="reg-warp hide">
 			<div class="reg-top">
 				<p class="reg-tip">抢到一个小幸运红包</p>
@@ -154,7 +235,8 @@
 		</div>
 		<div class="wb-content">
 			<img class="usericon" src="../img/logo.png"/>
-			<p class="busname">不二食堂的幸运小红包</p>
+			<p class="busname">不二食堂的裂变红包</p>
+			<!--普通用户显示的界面-->
 			<div class="resultinfo hide">
 				<p class="remark">欢迎您的下次光临~</p>
 				<p class="takeout hide"></p>
@@ -165,23 +247,43 @@
 				<div id="ticketList">
 					<!--<div class="tk-warp tkbg1">
 						<img class="tkicon" src="../img/logo.png"/>
-						<span class="tkname">赠送5积分</span>
+						<span class="tkname">5积分</span>
 						<p class="tktip-left">10积分=1元</p>
 						<p class="tktip-right">全场通用</p>
 					</div>
 					<div class="tk-warp tkbg2">
 						<img class="tkicon" src="../img/logo.png"/>
-						<span class="tkname">赠送5元代金券</span>
+						<span class="tkname">5元代金券</span>
 						<p class="tktip-left">全场通用</p>
 						<p class="tktip-right">有效期至: 2015.04.06</p>
 					</div>-->
 				</div>
 				<p class="redbag-detail hide">查看小伙伴们的手气 ></p>
 			</div>
+			<!--邀请人显示的界面-->
+			<div class="userB-block">
+				<p class="userbtile"><span>总额:</span> <span class="totalmoney pink monery">0.00</span> &nbsp; <span>个数:</span> <span class="count pink">0</span></p>
+				<p class="userbtile"><span>当前共获得邀请奖励:</span> <span id="userBprofit" class="red">0.00元</span></p>
+				<p class="takeline"></p>
+				<p class="taketitle gray"><span>领取明细</span> <span class="pink">( <span id="takecount">0</span> / <span class="count">0</span> )</span></p>
+				<ul id="takelist" class="takelist">
+					<!--<li>
+						<img class="takeicon" src="../img/logo.png"/>
+						<span class="takename">小幸运HER**EFD</span>
+						<span class="takemoney">0.01</span>
+						<span class="inviter">邀请人WEG**ETG奖0.01</span>
+						<span class="taketime">04-15 15:19:44</span>
+					</li>-->
+				</ul>
+			</div>
 		</div>
+		<div class="sharetipimg hide"><img src="../img/sharetipimg.png"/></div>
 		<div class="wb-footer">
-			<p class="btn-user">我的钱包</p>
-			<p class="btn-com">商家评价</p>
+			<div class="userC-block">
+				<p class="btn-user">我的钱包</p>
+				<p class="btn-com">商家评价</p>
+			</div>
+			<p class="userB-block btn-share wb-btn btn-red">立即邀请好友抢红包</p>
 		</div>
 	</body>
 
@@ -190,12 +292,45 @@
 	<script src="../js/app.js?v=7" charset="utf-8"></script>
 	<script src="../js/ticket.js?v=7" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
+		var pass;
+		var inviter;
 		var curRedBagInfo;
+		
 		$(function(){
 			//红包口令
-			var pass=getUrlParam("pass");
+			pass=getUrlParam("morepass");
 			if(!pass) return;
 			
+			//如果是必须分享才能购买的商品
+			inviter=getUrlParam("inviter");
+			if(inviter==UserObj.getUid()){
+				//邀请人自己,不能抢,只能查看明细提示邀请
+				initB();
+			}else{
+				//好友,可抢,但不提示邀请
+				initC();
+			}
+			
+		});
+		
+		/*初始化B*/
+		function initB(){
+			$(".userB-block").show();
+			$(".btn-share").click(function () {
+				$(".sharetipimg").show();
+			});
+			$(".sharetipimg").click(function(){
+				$(this).hide();
+			})
+			//查询红包明细
+			getRedbagDetail(pass);
+			//查询领取明细
+			getTakeDetail(pass);
+		}
+		
+		/*初始化C*/
+		function initC(){
+			$(".userC-block").show();
 			//查询当前红包信息
 			getRegbagInfo(pass,function(data){
 				if(data){
@@ -250,14 +385,7 @@
 			$(".redbag-detail").click(function(){
 				if(curRedBagInfo&&curRedBagInfo.pass) openWindow("../main/takebagdetail.html?pass="+curRedBagInfo.pass);
 			})
-			
-			//邀请人
-			$("#ticketList").on("click",".morepass",function(){
-				var morepass=$(this).attr("morepass");
-				if(morepass) openWindow("../main/morebag.html",{morepass:morepass,inviter:UserObj.getUid()});
-			})
-		});
-		
+		}
 		
 		/*根据口令查询当前用户的红包,检查是否已抢过*/
 		function getRegbagByPass(pass,callback){
@@ -281,7 +409,7 @@
 		
 		/*抢红包*/
 		function takeRegbag(pass){
-			var param={"pass":pass};
+			var param={"pass":pass,"inviter":inviter};
 			ajaxData(Host+"All?SL=RedPacket&SLM=takebypass",function(data){
 				//成功
 				if(data.Code==2000||data.Code==2001){
@@ -293,12 +421,11 @@
 						var st='';
 						if(curRedBagInfo.score) st+=getScoreStr("赠送"+curRedBagInfo.score);
 						if(curRedBagInfo.ticketId) st+=getTicketStr("赠送"+curRedBagInfo.ticketId);
-						if(curRedBagInfo.morepass&&curRedBagInfo.profit) st+=getMoreBagStr(curRedBagInfo.morepass,curRedBagInfo.profit);
 						$("#ticketList").html(st);
 					}
 				}else{
 					//红包已抢完
-					$(".takeout").text(data.Msg||"手慢了,红包已抢光").show();
+					$(".takeout").text(data.Msg||"手慢了,红包已抢光");
 				}
 				$(".resultinfo").show();
 				$(".redbag-detail").show();
@@ -306,6 +433,58 @@
 			},param,function(){
 				$("#regTake").removeClass("anim_rotate");
 			},true)
+		}
+		
+		
+		/*查询红包明细*/
+		function getRedbagDetail(pass){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=getdetail", function(data) {
+				$(".count").html(data.count);
+				$(".totalmoney").html(data.money.toFixed(2));
+			},param);
+		}
+		
+		/*查询领取明细*/
+		function getTakeDetail(pass){
+			var param={"pass":pass};
+			ajaxData(Host+"All?SL=RedPacket&SLM=takedetail", function(data) {
+				var takelist=document.getElementById("takelist");
+				var len=data.length;
+				if (len==0) {
+					new EmptyBox("暂没有人领取~").show(takelist,"0px");
+				} else{
+					//明细列表
+					$("#takecount").html(len);
+					var allprofit=0;
+					var str='';
+					for (var i = 0; i < len; i++) {
+						var detail=data[i];
+						str+='<li>';
+						str+='<img class="takeicon" src="../img/logo.png"/>';
+						str+='<span class="takename">小幸运'+getNickName(detail.takeuser)+'</span>';
+						str+='<span class="takemoney">'+detail.money.toFixed(2)+'</span>';
+						if(detail.inviter){
+							str+='<span class="inviter">邀请人('+getNickName(detail.inviter)+')奖励'+detail.profit+'元</span>';
+							allprofit+=detail.profit;
+						}
+						str+='<span class="taketime">'+detail.taketime+'</span>';
+						str+='</li>';
+					}
+					takelist.innerHTML=str;
+					$("#userBprofit").text(allprofit.toFixed(2)+"元");
+				}
+			},param);
+		}
+		
+		/*获取昵称*/
+		function getNickName(nickname){
+			nickname=nickname||"";
+			if (nickname==UserObj.getUid()) {
+				return "我";
+			} else{
+				return nickname.substr(0,3)+"**"+nickname.substr(nickname.length-3,3);
+			}
 		}
 	</script>
 

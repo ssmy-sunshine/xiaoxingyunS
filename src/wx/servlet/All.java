@@ -61,7 +61,7 @@ public class All extends HttpServlet {
 			e.printStackTrace();
 		}catch (Exception e) {
 			res.setCode(Result.CODE_ERR);
-			res.setMsg(e.getMessage());
+			res.setMsg("服务器异常:"+e.getMessage());
 			e.printStackTrace();
 		}
 		

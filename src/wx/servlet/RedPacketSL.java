@@ -10,7 +10,6 @@ import wx.db.RedPacketDetailDB;
 import wx.entity.RedPacket;
 import wx.entity.RedPacketDetail;
 import wx.entity.Result;
-import wx.entity.TakeDetail;
 import wx.util.ParamUtil;
 
 import com.google.gson.JsonArray;
@@ -55,19 +54,20 @@ public class RedPacketSL {
 			
 		}else if("takedetail".equals(SLM)){
 			//查询抢红包明细  All?SL=RedPacket&SLM=takedetail
-			ArrayList<TakeDetail> list=takedetail(request);
-			return list;
+			JsonArray arr=takedetail(request);
+			return arr;
 			
 		}else if("getalldata".equals(SLM)){
-			//查询当前用户金额,优惠券,积分总数  All?SL=RedPacket&SLM=getalldata
+			//查询当前用户总金额(红包金额+裂变奖励金额),优惠券,积分总数  All?SL=RedPacket&SLM=getalldata
 			String takeuser=ParamUtil.getString(request, "Uid");
-			JsonObject obj=new RedPacketDetailDB().getAllData(takeuser);
+			JsonObject obj=getALlData(takeuser);
 			return obj;
 			
 		}else if("moneydetail".equals(SLM)){
-			//查询当前用户金额明细  All?SL=RedPacket&SLM=moneydetail
+			//查询当前用户金额明细  All?SL=RedPacket&SLM=moneydetail&gettype=profit
 			String takeuser=ParamUtil.getString(request, "Uid");
-			JsonArray obj=new RedPacketDetailDB().getMoneyDetail(takeuser);
+			String gettype=request.getParameter("gettype");
+			JsonArray obj=getMoneyDetail(takeuser,gettype);
 			return obj;
 			
 		}else if("scoredetail".equals(SLM)){
@@ -90,6 +90,9 @@ public class RedPacketSL {
 		int score=ParamUtil.getInt0(request, "score");
 		int ticketId=ParamUtil.getInt0(request, "ticketId");
 		String remark=request.getParameter("remark");
+		double profit=ParamUtil.getDouble0(request,"profit");//发裂变红包时有值
+		double maxprofit=ParamUtil.getDouble0(request,"maxprofit");//发裂变红包时有值
+		int morepass=ParamUtil.getInt0(request,"morepass");//发普通红包如果有带裂变红包,则morepass=裂变红包的pass
 		//实例化红包对象
 		RedPacket redPacket=new RedPacket();
 		redPacket.setMoney(totalMoney);
@@ -99,6 +102,9 @@ public class RedPacketSL {
 		redPacket.setScore(score);
 		redPacket.setTicketId(ticketId);
 		redPacket.setRemark(remark);
+		redPacket.setProfit(profit);
+		redPacket.setMaxprofit(maxprofit);
+		redPacket.setMorepass(morepass);
 		//发红包
 		int pass=new RedPacketBiz().create(redPacket);
 		return pass;
@@ -116,7 +122,8 @@ public class RedPacketSL {
 	private Result takeByPass(HttpServletRequest request) throws Exception{
 		int pass=ParamUtil.getInt(request, "pass");
 		String takeuser=ParamUtil.getString(request, "Uid");
-		Result mResult=new RedPacketBiz().takeByPass(pass, takeuser);
+		String inviter=request.getParameter("inviter");
+		Result mResult=new RedPacketBiz().takeByPass(pass, takeuser, inviter);
 		return mResult;
 	}
 	
@@ -137,9 +144,31 @@ public class RedPacketSL {
 	}
 	
 	/**查询抢红包明细*/
-	private ArrayList<TakeDetail> takedetail(HttpServletRequest request) throws Exception {
+	private JsonArray takedetail(HttpServletRequest request) throws Exception {
 		int pass=ParamUtil.getInt(request, "pass");
-		ArrayList<TakeDetail> list=new RedPacketDetailDB().getTakeList(pass);
-		return list;
+		JsonArray arr=new RedPacketDetailDB().getTakeList(pass);
+		return arr;
 	}
+	
+	/**查询当前用户总金额(红包金额+裂变奖励金额),优惠券,积分总数*/
+	private JsonObject getALlData(String takeuser) throws Exception {
+		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
+		JsonObject obj=mRedPacketDetailDB.getAllData(takeuser);
+		double allprofit=mRedPacketDetailDB.getAllProfit(takeuser);
+		obj.addProperty("allprofit", allprofit);
+		obj.addProperty("totalprice", obj.get("alltake").getAsDouble()+allprofit);
+		return obj;
+	}
+	
+	/**查询当前用户金额明细*/
+	private JsonArray getMoneyDetail(String takeuser, String gettype) throws Exception {
+		JsonArray obj;
+		if("profit".equals(gettype)){
+			obj=new RedPacketDetailDB().getProfitDetail(takeuser);
+		}else{
+			obj=new RedPacketDetailDB().getMoneyDetail(takeuser);
+		}
+		return obj;
+	}
+	
 }

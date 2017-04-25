@@ -13,8 +13,8 @@
 		
 		<link rel="stylesheet" href="../fonts/iconfont.css">
 		<link rel="stylesheet" href="../css/layer.css">
-		<link rel="stylesheet" href="../css/app.css?v=6">
-		<link rel="stylesheet" href="../css/ticket.css?v=6">
+		<link rel="stylesheet" href="../css/app.css?v=7">
+		<link rel="stylesheet" href="../css/ticket.css?v=7">
 		<style type="text/css">
 			body{background-color: #eee}
 			.userinfo{
@@ -61,8 +61,8 @@
 				<img class="usericon" src="../img/usericon-max.png" />
 				<p class="username">小幸运</p>
 				<div class="balance">
-					<p class="scoredetail"><span>积分:</span> <span id="scoreData" class="red">0</span></p>
-					<p class="ticketdetail"><span>红包余额:</span> <span id="balanceData" class="monery red">0.00</span></p>
+					<p class="scoredetail"><span>积分:</span> <span id="allscore" class="red">0</span></p>
+					<p class="ticketdetail"><span>红包余额:</span> <span id="totalprice" class="monery red">0.00</span></p>
 				</div>
 				<p class="withdraw wb-btn btn-red-radius">霸气提现</p>
 			</div>
@@ -73,8 +73,8 @@
 
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="../js/layer.js" charset="utf-8"></script>
-	<script src="../js/app.js?v=6" charset="utf-8"></script>
-	<script src="../js/ticket.js?v=6" charset="utf-8"></script>
+	<script src="../js/app.js?v=7" charset="utf-8"></script>
+	<script src="../js/ticket.js?v=7" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(function(){
 			$(".scoredetail").click(function(){
@@ -96,13 +96,12 @@
 		function getAllData(){
 			ajaxData(Host+"All?SL=RedPacket&SLM=getalldata",function(data){
 				//余额
-				var money=data.allprice.toFixed(2);
-				$("#balanceData").text(money);
-				UserObj.setMoney(money);
+				var totalprice=data.totalprice.toFixed(2);
+				$("#totalprice").text(totalprice);
 				var st='';
 				//积分
 				if(data.allscore){
-					$("#scoreData").text(data.allscore);
+					$("#allscore").text(data.allscore);
 					UserObj.setScore(data.allscore);
 					st+=getScoreStr("您总共有"+data.allscore);
 				}

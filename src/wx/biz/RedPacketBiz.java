@@ -52,9 +52,10 @@ public class RedPacketBiz {
 	 * 根据口令抢红包
 	 * @param pass 口令
 	 * @param takeuser 用户id
+	 * @param inviter 邀请者id
 	 * @return 成功true; 失败false;
 	 */
-	public Result takeByPass(int pass,String takeuser) throws Exception{
+	public Result takeByPass(int pass,String takeuser,String inviter) throws Exception{
 		Result mResult=new Result();
 		RedPacketDetailDB mRedPacketDetailDB=new RedPacketDetailDB();
 		//查询用户是否已抢过
@@ -67,7 +68,7 @@ public class RedPacketBiz {
 		}
 		
 		//根据口令查询可抢的红包
-		RedPacketDetail canTakeBag=mRedPacketDetailDB.getCanTakeId(pass);
+		RedPacketDetail canTakeBag=mRedPacketDetailDB.getCanTake(pass);
 		if(canTakeBag==null){
 			//红包已抢完
 			mResult.setCode(2002);
@@ -76,7 +77,7 @@ public class RedPacketBiz {
 		}
 		
 		//标记用户抢成功
-		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeBag.getId(), takeuser);
+		boolean success=mRedPacketDetailDB.updateTakeUser(canTakeBag.getId(), takeuser, inviter);
 		if(!success){
 			//手慢了,红包已抢光
 			mResult.setCode(2003);
@@ -88,6 +89,7 @@ public class RedPacketBiz {
 		//抢成功
 		mResult.setCode(2000);
 		mResult.setMsg(canTakeBag);
+		
 		return mResult;
 	}
 	
