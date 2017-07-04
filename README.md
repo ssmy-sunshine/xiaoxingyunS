@@ -15,10 +15,10 @@
 
 ## 目录:  
 
-* <a href="#gn">功能亮点 </a> <br/>
-* <a href="#ks">快速入门 </a> <br/>
-* <a href="#jc">基础案例 base demos </a> <br/>
-* <a href="#gj">高级案例 senior demos </a> <br/>
+* <a href="#功能亮点">功能亮点 </a> <br/>
+* <a href="#快速入门">快速入门 </a> <br/>
+* <a href="#基础案例">基础案例 base demos </a> <br/>
+* <a href="#高级案例">高级案例 senior demos </a> <br/>
 
 ## <span id="gn">功能亮点:</span>
 
