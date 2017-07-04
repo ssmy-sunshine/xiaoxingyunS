@@ -17,10 +17,10 @@
 
 * <a href="#功能亮点">功能亮点 </a> <br/>
 * <a href="#快速入门">快速入门 </a> <br/>
-* <a href="#基础案例">基础案例 base demos </a> <br/>
-* <a href="#高级案例">高级案例 senior demos </a> <br/>
+* <a href="#基础案例-base-demos-">基础案例 base demos </a> <br/>
+* <a href="#高级案例-senior-demos-">高级案例 senior demos </a> <br/>
 
-## 功能亮点:
+## 功能亮点 :
 
 1. 自动判断和提示列表无任何数据或无更多数据
 
@@ -37,7 +37,7 @@
 7. 一个界面可支持多个下拉刷新,上拉加载
 
 
-## <span id="ks">快速入门:</span>
+## 快速入门 :
 
 1. 引用 **mescroll.min.css** , **mescroll.min.js**
 
@@ -101,7 +101,7 @@
         }
 ```  
 
-## <span id="gj">高级案例 senior demos :</span>  
+## 高级案例 senior demos :
 
 #### 1. [【淘宝 v6.8.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/taobao)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/taobao/taobao.gif) 
