@@ -20,7 +20,7 @@
 * <a href="#基础案例">基础案例 base demos </a> <br/>
 * <a href="#高级案例">高级案例 senior demos </a> <br/>
 
-## <span id="gn">功能亮点:</span>
+## <span>功能亮点:</span>
 
 1. 自动判断和提示列表无任何数据或无更多数据
 
