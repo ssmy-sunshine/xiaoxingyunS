@@ -17,6 +17,7 @@
 
 * <a href="#功能亮点-">功能亮点 </a> <br/>
 * <a href="#快速入门-">快速入门 </a> <br/>
+* <a href="#API文档-">API文档 </a> <br/>
 * <a href="#基础案例-base-demos-">基础案例 base demos </a> <br/>
 * <a href="#高级案例-senior-demos-">高级案例 senior demos </a> <br/>
 
@@ -100,6 +101,14 @@
          });
         }
 ```  
+
+## API文档 :  
+<table border="1" cellspacing="10" cellpadding="10">
+	<tr><td>Data</td><td>Data</td></tr>
+	<tr><td>Data</td><td>Data</td></tr>
+</table>  
+
+## 基础案例 base demos :  
 
 ## 高级案例 senior demos :
 
