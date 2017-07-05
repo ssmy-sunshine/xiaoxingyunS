@@ -7,13 +7,7 @@ var mescroll = new MeScroll("mescroll", options); //创建mescroll对象
 	<tr align="center"><td colspan="6">参数配置 options</td></tr>
 	<tr align="center"><td></td> <td colspan="2">下拉刷新  down</td> <td colspan="2">上拉加载 up</td></tr>
 	<tr align="center">
-		<td>参数名</td>
-		
-		<td>默认值</td>
-		<td>说明</td>
-		
-		<td>默认值</td>
-		<td>说明</td>
+		<td>参数名</td><td>默认值</td><td>说明</td><td>默认值</td><td>说明</td>
 	</tr>
 </table>
 
