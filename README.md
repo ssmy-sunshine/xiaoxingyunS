@@ -1,11 +1,8 @@
 ## API文档 : 
-<table border="" cellspacing="" cellpadding="">
-			<tr><th>Header</th></tr>
-			<tr><td>'&lt;p class="downwarp-progress"&gt;&lt;/p&gt;&lt;p class="downwarp-tip"&gt;下拉刷新&lt;/p&gt;'</td></tr>
-		</table>
 ```
 var mescroll = new MeScroll("mescroll", options); //创建mescroll对象
 ```  
+
 <table border="1" cellspacing="0">
 	<tr align="center"><td colspan="6">参数配置 options</td></tr>
 	<tr align="center"><td></td> <td colspan="2">下拉刷新  down</td> <td colspan="2">上拉加载 up</td></tr>
@@ -110,15 +107,6 @@ var mescroll = new MeScroll("mescroll", options); //创建mescroll对象
 		
 		<td>'&lt;p class="downwarp-progress"&gt;&lt;/p&gt;&lt;p class="downwarp-tip"&gt;下拉刷新&lt;/p&gt;'</td>
 		<td>下拉刷新的布局内容</td>
-	</tr>
-	<tr align="center">
-		<td>inited</td>
-		
-		<td>function(mescroll, downwarp) {
-			mescroll.downTipDom = downwarp.getElementsByClassName("downwarp-tip")[0];
-			mescroll.downProgressDom = downwarp.getElementsByClassName("downwarp-progress")[0];
-		} </p>'</td>
-		<td>下拉刷新初始化完毕的回调,可缓存dom</td>
 	</tr>
 </table>
 
