@@ -424,7 +424,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 	</tr>
 </table>
 
-## 其他方法 :  
+## 其他方法 :
 
 <table border="1" cellspacing="0">
 	<tr align="center"><td colspan="2">如果您已通读并理解 mescroll源码, 以下方法可灵活运用于更复杂的场景<br/>知其然, 知其所以然, 源码注释超详细, 读懂源码so easy~</tr>
@@ -460,7 +460,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 	</tr>
 	<tr align="center">
 		<td>mescroll.loadFull();</td>
-		<td>检查如果加载的数据过少,无法触发上拉加载时,则自动加载下一页,直到满屏或无更多数据为止<br/>
+		<td>检查如果加载的数据过少,无法触发上拉加载时,则自动加载下一页,直到满屏或无数据<br/>
 		此方法最好在列表的图片数据加载完成之后调用,以便计算列表内容高度的准确性<br/>
 		mescroll.endSuccess() 内部有调用</td>
 	</tr>
