@@ -555,7 +555,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 
 <table border="1" cellspacing="0" width="100%">
 	<tr align="center">
-		<td rowspan="4">
+		<td rowspan="4" width="400px">
 		mescroll高级案例源码 -- 淘宝 v6.8.0<br/>
 		mescroll高级案例源码 -- 京东 v6.1.0<br/>
 		mescroll高级案例源码 -- 美团 v8.2.3<br/>
@@ -563,7 +563,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		</td>
 	</tr>
 	<tr align="center">
-		<td>
+		<td width="480px">
 		【 获取方法一 】<br/>
 		我是大神 , 我为mescroll添砖加瓦<br/>
 		在 GitHub 上 Star 和 Fork 了 mescroll<br/>
@@ -571,7 +571,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		</td>
 	</tr>
 	<tr align="center">
-		<td>
+		<td width="480px">
 		【 获取方法二 】<br/>
 		我爱分享 , 编写mescroll相关案例<br/>
 		联系 QQ 2260429223 投稿<br/>
@@ -580,7 +580,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		</td>
 	</tr>
 	<tr align="center">
-		<td>
+		<td width="480px">
 		【 获取方法三 】<br/>
 		我不做伸手党, 打赏任意金额<br/>
 		联系 QQ 2260429223 获取高级案例源码<br/>
