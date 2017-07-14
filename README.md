@@ -368,7 +368,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 	</tr>
 </table>  
 
-## 常用方法 :  
+## 常用方法 :   
 
 <table border="1" cellspacing="0">
 	<tr align="center">
@@ -425,7 +425,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 	</tr>
 </table>
 
-## 其他方法 :
+## 其他方法 :  
 
 <table border="1" cellspacing="0">
 	<tr align="center"><td colspan="2">如果您已通读并理解 mescroll源码, 以下方法可灵活运用于更复杂的场景<br/>知其然, 知其所以然, 源码注释超详细, 读懂源码so easy~</tr>
@@ -486,6 +486,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 </table>
 
 ## 基础案例 base demos :  
+
 #### [【新闻列表】演示下拉刷新添加新数据到列表顶部](https://github.com/mescroll/mescroll/tree/master/demo/base/list-news)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-news.gif) 
 <br/><br/><br/>
@@ -505,7 +506,8 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 ![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-options.gif) 
 <br/><br/><br/>
 
-## 中级案例 intermediate demos :
+## 中级案例 intermediate demos :  
+
 #### [【知乎 v3.53.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/zhihu)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/zhihu/zhihu.gif) 
 <br/><br/><br/>
@@ -519,7 +521,8 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 ![](https://github.com/mescroll/mescroll/raw/master/demo/yabuli/yabuli.gif) 
 <br/><br/><br/>
 
-## 高级案例 senior demos :
+## 高级案例 senior demos :  
+
 #### [【淘宝 v6.8.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/taobao)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/taobao/taobao.gif) 
 <br/><br/><br/>
@@ -533,7 +536,8 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 ![](https://github.com/mescroll/mescroll/raw/master/demo/meitunmama/meitunmama.gif) 
 <br/><br/><br/>
 
-## 下载基础中级案例源码 :
+## 下载基础中级案例源码 :  
+
 <table border="1" cellspacing="0">
 	<tr align="center">
 		<td>
@@ -544,9 +548,11 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		</td>
 		<td>[【免费下载】](xxx)</td>
 	</tr>
-</table/>  
+</table>  
 
-## 获取高级案例源码 :
+
+## 获取高级案例源码 :  
+
 <table border="1" cellspacing="0">
 	<tr align="center">
 		<td>
@@ -580,11 +586,15 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		打赏排行 榜上有名
 		</td>
 	</tr>
-</table/>  
-![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-wx.jpg) 
-![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-zfb.jpg) 
+</table>  
 
-## 打赏排行榜 : 
+![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-wx.jpg)  
+
+![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-zfb.jpg)  
+
+
+## 打赏排行榜 :  
+
 <table border="1" cellspacing="0">
 	<tr>
 		<td>用户昵称</td>
