@@ -16,8 +16,13 @@
 * <a href="#功能亮点-">功能亮点 </a> <br/>
 * <a href="#快速入门-">快速入门 </a> <br/>
 * <a href="#api文档-">API文档 </a> <br/>
+* <a href="#常用方法-">常用方法 </a> <br/>
+* <a href="#其他方法-">其他方法 </a> <br/>
 * <a href="#基础案例-base-demos-">基础案例 base demos </a> <br/>
+* <a href="#中级案例-intermediate-demos-">中级案例 intermediate demos </a> <br/>
 * <a href="#高级案例-senior-demos-">高级案例 senior demos </a> <br/>
+* <a href="#获取高级案例源码-">获取高级案例源码 </a> <br/>
+* <a href="#打赏排行榜-">打赏排行榜 </a> <br/>
 
 ## 功能亮点 :
 
@@ -361,6 +366,123 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		<td align="left">num: 当前页码,默认0,回调之前会加1,即callback(page)会从1开始; <br/>size: 每页数据的数量; <br/>time: 加载第一页数据服务器返回的时间;防止用户翻页时,后台新增了数据从而导致下一页数据重复;</td>
 	</tr>
 </table>  
+
+## 常用方法 :  
+
+<table border="1" cellspacing="0">
+	<tr align="center">
+		<td>方法名</td>
+		<td>说明</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.endSuccess( dataSize, systime );</td>
+		<td>
+		隐藏下拉刷新和上拉加载的状态, 在联网获取数据成功后调用<br/>
+		dataSize : 当前页获取的数据总数<br/>
+		如果传了dataSize, 那么mescroll会自动判断: 列表若无任何数据,则提示空,显示empty配置的内容;<br/>
+		列表若无下一页数据,则提示无更多数据,显示htmlNodata配置的内容;<br/>
+		如果不传dataSize, 则仅隐藏下拉刷新和上拉加载的状态<br/>
+		systime : 加载第一页数据的服务器时间 (可空);<br/>
+		防止用户翻页时,后台新增了数据从而导致下一页数据重复;
+		</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.endErr();</td>
+		<td>隐藏下拉刷新和上拉加载的状态, 在联网获取数据失败后调用;<br/>mescroll内部会自动恢复原来的页码,时间等变量;</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.triggerDownScroll();</td>
+		<td>主动触发下拉刷新</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.triggerUpScroll();</td>
+		<td>主动触发上拉加载</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.resetUpScroll();</td>
+		<td>重置列表</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.scrollTo( y );</td>
+		<td>滚动列表到指定位置 ( y=0回到列表顶部; 如需滚动到列表底部,可设置y很大的值,比如y=99999 )</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.optDown;</td>
+		<td>获取下拉刷新的配置</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.optUp;</td>
+		<td>获取上拉加载的配置</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.lockDownScroll( isLock );</td>
+		<td>锁定下拉刷新 ( isLock=ture,null 锁定 ; isLock=false 解锁 )</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.lockUpScroll( isLock );</td>
+		<td>锁定上拉加载 ( isLock=ture,null 锁定 ; isLock=false 解锁 )</td>
+	</tr>
+</table>
+
+## 其他方法 :  
+
+<table border="1" cellspacing="0">
+	<tr align="center"><td colspan="2">如果您已通读并理解 mescroll源码, 以下方法可灵活运用于更复杂的场景<br/>知其然, 知其所以然, 源码注释超详细, 读懂源码so easy~</tr>
+	<tr align="center">
+		<td>mescroll.showDownScroll();</td>
+		<td>显示下拉刷新的进度布局<br/>
+		mescroll.triggerDownScroll() 和 mescroll.resetUpScroll() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.endDownScroll();</td>
+		<td>隐藏下拉刷新的进度布局<br/>
+		mescroll.endSuccess() 和 mescroll.endErr() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.showUpScroll();</td>
+		<td>显示上拉加载的进度布局<br/>
+		mescroll.triggerDownScroll() 和 mescroll.resetUpScroll() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.showNoMore();</td>
+		<td>显示上拉无更多数据的布局<br/>
+		mescroll.endUpScroll() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.hideUpScroll();</td>
+		<td>隐藏上拉加载的布局<br/>
+		mescroll.endUpScroll() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.clearDataList();</td>
+		<td>清空上拉加载的数据列表<br/>
+		mescroll.resetUpScroll() 和 mescroll.endSuccess() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.loadFull();</td>
+		<td>检查如果加载的数据过少,无法触发上拉加载时,则自动加载下一页,直到满屏或无更多数据为止<br/>
+		此方法最好在列表的图片数据加载完成之后调用,以便计算列表内容高度的准确性<br/>
+		mescroll.endSuccess() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.showEmpty();</td>
+		<td>显示无任何数据的空布局<br/>
+		mescroll.endSuccess() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.removeEmpty();</td>
+		<td>移除无任何数据的空布局<br/>
+		mescroll.endSuccess() 内部有调用</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.showTopBtn();</td>
+		<td>显示回到顶部的按钮</td>
+	</tr>
+	<tr align="center">
+		<td>mescroll.hideTopBtn();</td>
+		<td>隐藏回到顶部的按钮</td>
+	</tr>
+</table>
 
 ## 基础案例 base demos :  
 #### [【新闻列表】演示下拉刷新添加新数据到列表顶部](https://github.com/mescroll/mescroll/tree/master/demo/base/list-news)
