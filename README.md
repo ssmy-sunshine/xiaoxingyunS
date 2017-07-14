@@ -546,6 +546,8 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		mescroll所有基础案例源码<br/>
 		mescroll所有中级案例源码
 		</td>
+	</tr>
+	<tr>
 		<td>[【免费下载】](xxx)</td>
 	</tr>
 </table>  
