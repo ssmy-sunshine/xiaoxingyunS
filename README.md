@@ -21,6 +21,7 @@
 * <a href="#基础案例-base-demos-">基础案例 base demos </a> <br/>
 * <a href="#中级案例-intermediate-demos-">中级案例 intermediate demos </a> <br/>
 * <a href="#高级案例-senior-demos-">高级案例 senior demos </a> <br/>
+* <a href="#下载基础中级案例源码-">下载基础中级案例源码 </a> <br/>
 * <a href="#获取高级案例源码-">获取高级案例源码 </a> <br/>
 * <a href="#打赏排行榜-">打赏排行榜 </a> <br/>
 
@@ -532,3 +533,65 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 ![](https://github.com/mescroll/mescroll/raw/master/demo/meitunmama/meitunmama.gif) 
 <br/><br/><br/>
 
+## 下载基础中级案例源码 :
+<table border="1" cellspacing="0">
+	<tr align="center">
+		<td>
+		mescroll.css , mescroll.min.css<br/>
+		mescroll.js , mescroll.min.js<br/>
+		mescroll所有基础案例源码<br/>
+		mescroll所有中级案例源码
+		</td>
+		<td>[【免费下载】](xxx)</td>
+	</tr>
+</table/>  
+
+## 获取高级案例源码 :
+<table border="1" cellspacing="0">
+	<tr align="center">
+		<td>
+		mescroll高级案例源码 -- 淘宝 v6.8.0<br/>
+		mescroll高级案例源码 -- 京东 v6.1.0<br/>
+		mescroll高级案例源码 -- 美团 v8.2.3<br/>
+		mescroll高级案例源码 -- 美囤妈妈 v2.0.5
+		</td>
+	</tr>
+	<tr align="center">
+		<td>
+		【获取方法一 :】<br/>
+		我是大神 , 我为mescroll添砖加瓦<br/>
+		在 GitHub 上 Star 和 Fork 了 mescroll, 并提出优化或改进建议, Pull requests 获得了采纳 ~
+		</td>
+	</tr>
+	<tr align="center">
+		<td>
+		【获取方法二 :】<br/>
+		我爱分享 , 编写mescroll相关案例<br/>
+		联系 QQ 2260429223 投稿<br/>
+		评审优化后,在mescroll官网展示<br/>
+		源码指向您的GitHub
+		</td>
+	</tr>
+	<tr align="center">
+		<td>
+		【获取方法三 :】<br/>
+		我不做伸手党, 打赏任意金额<br/>
+		联系 QQ 2260429223 获取高级案例源码<br/>
+		打赏排行 榜上有名
+		</td>
+	</tr>
+</table/>  
+![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-wx.jpg) 
+![](https://github.com/mescroll/mescroll/raw/master/demo/res/pay-zfb.jpg) 
+
+## 打赏排行榜 : 
+<table border="1" cellspacing="0">
+	<tr>
+		<td>用户昵称</td>
+		<td>打赏金额</td>
+		<td>留言备注</td>
+		<td>友情链接</td>
+	</tr>
+</table>
+
+<br/><br/><br/><br/><br/><br/>
