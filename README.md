@@ -538,7 +538,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 
 ## 下载基础中级案例源码 :  
 
-<table border="1" cellspacing="0">
+<table border="1" cellspacing="0" width="100%">
 	<tr align="center">
 		<td>
 		mescroll.css , mescroll.min.css<br/>
@@ -548,14 +548,14 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		</td>
 	</tr>
 	<tr>
-		<td>[【免费下载】](xxx)</td>
+		<td>[【立即下载】](https://github.com/mescroll/mescroll/tree/master/demo/meitunmama)</td>
 	</tr>
 </table>  
 
 
 ## 获取高级案例源码 :  
 
-<table border="1" cellspacing="0">
+<table border="1" cellspacing="0" width="100%">
 	<tr align="center">
 		<td>
 		mescroll高级案例源码 -- 淘宝 v6.8.0<br/>
@@ -597,7 +597,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 
 ## 打赏排行榜 :  
 
-<table border="1" cellspacing="0">
+<table border="1" cellspacing="0" width="100%">
 	<tr>
 		<td>用户昵称</td>
 		<td>打赏金额</td>
