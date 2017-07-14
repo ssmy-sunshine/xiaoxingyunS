@@ -538,7 +538,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 
 ## 下载基础中级案例源码 :  
 
-<table border="1" cellspacing="0" width="100%">
+<table border="1" cellspacing="0" width="100%" height="120px">
 	<tr align="center">
 		<td>mescroll.css , mescroll.min.css</td>
 		<td>mescroll.js , mescroll.min.js</td>
@@ -546,7 +546,7 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		<td>mescroll所有中级案例源码</td>
 	</tr>
 	<tr align="center">
-		<td colspan="4"> [【立即下载】](https://github.com/mescroll/mescroll/tree/master/demo/meitunmama) </td>
+		<td colspan="4"> <a href="#" target="_blank">【立即下载】</a> </td>
 	</tr>
 </table>  
 
@@ -566,7 +566,9 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		<td>
 		【 获取方法一 】<br/>
 		我是大神 , 我为mescroll添砖加瓦<br/>
-		在 GitHub 上 Star 和 Fork 了 mescroll, 并提出优化或改进建议, Pull requests 获得了采纳 ~
+		在 GitHub 上 Star 和 Fork 了 mescroll<br/>
+		并提出优化或改进建议<br/>
+		且Pull requests 获得了采纳 ~
 		</td>
 	</tr>
 	<tr align="center">
