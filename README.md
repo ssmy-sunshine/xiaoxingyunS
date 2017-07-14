@@ -346,6 +346,11 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 		<td>显示无更多数据的回调; 回调(mescroll实例, upwarp上拉加载的布局Dom对象)</td>
 	</tr>
 	<tr align="center">
+		<td>onScroll</td>
+		<td>null</td>
+		<td>列表滑动监听, 默认null<br/>例 onScroll : function(mescroll, y){ ... };  y为列表当前滚动条的位置)</td>
+	</tr>
+	<tr align="center">
 		<td>callback</td>
 		<td>function(page,mescroll){}</td>
 		<td>上拉加载的回调; 回调(page对象,mescroll实例), 其中page={num:页码, size:每页数据的数量, time:第一页数据的时间}</td>
@@ -358,30 +363,50 @@ var mescroll = new MeScroll("mescroll", { down: {下拉刷新的配置参数}, u
 </table>  
 
 ## 基础案例 base demos :  
+#### [【新闻列表】演示下拉刷新添加新数据到列表顶部](https://github.com/mescroll/mescroll/tree/master/demo/base/list-news)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-news.gif) 
+<br/><br/><br/>
+#### [【商品列表】演示下拉刷新重置列表数据](https://github.com/mescroll/mescroll/tree/master/demo/base/list-products)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-products.gif) 
+<br/><br/><br/>
+#### [【单mescroll】演示每次切换菜单都重置列表,不缓存数据](https://github.com/mescroll/mescroll/tree/master/demo/base/list-mescroll-one)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-mescroll-one.gif) 
+<br/><br/><br/>
+#### [【多mescroll】演示每个菜单列表仅初始化一次,切换菜单缓存数据](https://github.com/mescroll/mescroll/tree/master/demo/base/list-mescroll-more)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-mescroll-more.gif) 
+<br/><br/><br/>
+#### [【满屏加载与锁定滑动】演示自动满屏加载,可临时锁定上拉刷新和下拉加载](https://github.com/mescroll/mescroll/tree/master/demo/base/list-full-lock)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-full-lock.gif) 
+<br/><br/><br/>
+#### [【mescroll所有配置项】源码展示mescroll所有配置项, 快速上手调试mescroll](https://github.com/mescroll/mescroll/tree/master/demo/base/list-options)
+![](https://github.com/mescroll/mescroll/raw/master/demo/base/list-options.gif) 
+<br/><br/><br/>
 
-## 高级案例 senior demos :
-
-#### 1. [【淘宝 v6.8.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/taobao)
-![](https://github.com/mescroll/mescroll/raw/master/demo/taobao/taobao.gif) 
+## 中级案例 intermediate demos :
+#### [【知乎 v3.53.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/zhihu)
+![](https://github.com/mescroll/mescroll/raw/master/demo/zhihu/zhihu.gif) 
 <br/><br/><br/>
-#### 2. [【京东 v6.1.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/jingdong)
-![](https://github.com/mescroll/mescroll/raw/master/demo/jingdong/jingdong.gif) 
-<br/><br/><br/>
-#### 3. [【美团 v8.2.3】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/meituan)
-![](https://github.com/mescroll/mescroll/raw/master/demo/meituan/meituan.gif) 
-<br/><br/><br/>
-#### 4. [【新浪微博 v7.6.1】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/xinlang)
+#### [【新浪微博 v7.6.1】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/xinlang)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/xinlang/xinlang.gif) 
 <br/><br/><br/>
-#### 5. [【贝贝 v6.0.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/beibei)
+#### [【贝贝 v6.0.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/beibei)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/beibei/beibei.gif) 
 <br/><br/><br/>
-#### 6. [【雅布力 v2.4.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/yabuli)
+#### [【雅布力 v2.4.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/yabuli)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/yabuli/yabuli.gif) 
 <br/><br/><br/>
-#### 7. [【美囤妈妈 v2.0.5】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/meitunmama)
+
+## 高级案例 senior demos :
+#### [【淘宝 v6.8.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/taobao)
+![](https://github.com/mescroll/mescroll/raw/master/demo/taobao/taobao.gif) 
+<br/><br/><br/>
+#### [【京东 v6.1.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/jingdong)
+![](https://github.com/mescroll/mescroll/raw/master/demo/jingdong/jingdong.gif) 
+<br/><br/><br/>
+#### [【美团 v8.2.3】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/meituan)
+![](https://github.com/mescroll/mescroll/raw/master/demo/meituan/meituan.gif) 
+<br/><br/><br/>
+#### [【美囤妈妈 v2.0.5】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/meitunmama)
 ![](https://github.com/mescroll/mescroll/raw/master/demo/meitunmama/meitunmama.gif) 
 <br/><br/><br/>
-#### 8. [【知乎 v3.53.0】APP的下拉刷新上拉加载](https://github.com/mescroll/mescroll/tree/master/demo/zhihu)
-![](https://github.com/mescroll/mescroll/raw/master/demo/zhihu/zhihu.gif) 
 
